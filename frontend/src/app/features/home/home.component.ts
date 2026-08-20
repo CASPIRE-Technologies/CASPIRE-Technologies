@@ -11,6 +11,15 @@ import { ApiService } from '../../core/services/api.service';
   template: `
     <!-- 1. Hero Section -->
     <section class="hero-section" aria-label="Hero Introduction">
+      <!-- Background Video -->
+      <video class="hero-video" autoplay [muted]="true" loop playsinline>
+        <source src="./../../../assets/videos/Hero_video_for_tech_company_202608201455.mp4" type="video/mp4" >
+        Your browser does not support the video tag.
+      </video>
+      
+      <!-- Video Overlay -->
+      <div class="hero-overlay"></div>
+      
       <div class="container hero-container">
         <div class="hero-content">
           <div class="badge badge-teal mb-4">
@@ -34,12 +43,12 @@ import { ApiService } from '../../core/services/api.service';
                 <span>Apex Engineering Dashboard</span>
               </div>
               <div class="code-snippet">
-                <span class="token-keyword">const</span> engine = <span class="token-function">createSoftwareSolution</span>({{ '{' }}<br>
+                <span class="token-keyword">const</span> solution = <span class="token-keyword">await</span> <span class="token-function">buildStack</span>({{ '{' }}<br>
                 &nbsp;&nbsp;frontend: <span class="token-string">'Angular Standalone + Signals'</span>,<br>
                 &nbsp;&nbsp;backend: <span class="token-string">'NestJS REST API + Prisma'</span>,<br>
                 &nbsp;&nbsp;quality: <span class="token-string">'Independent QA & Automation'</span>,<br>
                 &nbsp;&nbsp;security: <span class="token-string">'Tokenized Auth + Rate Limiting'</span><br>
-                {{ '}' }});
+                {{ '}' }}).<span class="token-function">deploy</span>();
               </div>
               <div class="card-footer-stats">
                 <div class="stat-box">
@@ -256,7 +265,9 @@ import { ApiService } from '../../core/services/api.service';
   `,
   styles: [`
     .hero-section {
-      background: linear-gradient(135deg, var(--color-navy-dark) 0%, var(--color-navy) 100%);
+      background-size: cover;
+      border-bottom-color: linear-gradient(to down, red, orange);
+      background-position: center;
       color: #ffffff;
       padding: 5rem 0 6rem 0;
       position: relative;
@@ -265,11 +276,31 @@ import { ApiService } from '../../core/services/api.service';
       .hero-title { color: #ffffff; margin-bottom: 1.25rem; }
       .hero-subtitle { color: #cbd5e1; font-size: 1.25rem; max-width: 600px; margin-bottom: 2rem; }
     }
+    .hero-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
     .hero-container {
       display: grid;
       grid-template-columns: 1.2fr 1fr;
       gap: 3rem;
       align-items: center;
+      position: relative;
+      z-index: 2;
     }
     .pulse-dot {
       width: 8px;
@@ -288,11 +319,13 @@ import { ApiService } from '../../core/services/api.service';
       justify-content: center;
     }
     .visual-card-main {
-      background: #0f172a;
-      border: 1px solid rgba(255, 255, 255, 0.15);
+      background: rgba(15, 23, 42, 0.4);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.25);
       border-radius: var(--radius-lg);
       padding: 1.5rem;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), inset 0 1px 2px 0 rgba(255, 255, 255, 0.1);
       font-family: monospace;
       color: #e2e8f0;
     }
