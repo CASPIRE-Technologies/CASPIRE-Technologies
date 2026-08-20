@@ -15,7 +15,7 @@ import { ApiService } from '../../core/services/api.service';
         <span class="badge badge-teal mb-2">Primary Services</span>
         <h1>Software Engineering & Services Catalog</h1>
         <p class="header-lead">
-          Comprehensive digital capability spanning custom application development, quality engineering, backend APIs, and dedicated team extension.
+          Comprehensive digital capability spanning custom application development, quality engineering, backend APIs, SEO, and organic social media marketing.
         </p>
       </div>
     </section>
@@ -96,20 +96,36 @@ export class ServicesComponent implements OnInit {
   ngOnInit() {
     this.seo.updateMeta({
       title: 'IT & Software Engineering Services',
-      description: 'Explore custom web applications, SME digitization, backend APIs, QA testing, DevOps, and dedicated Sri Lankan engineering teams.',
+      description: 'Explore custom web applications, SME digitization, backend APIs, QA testing, DevOps, SEO, and organic social media marketing.',
     });
 
     this.api.get<any[]>('services').subscribe({
-      next: (data) => this.services.set(data),
+      next: (data) => this.services.set(this.withMarketingServices(data)),
       error: () => this.services.set(this.getFallbackServices()),
     });
   }
 
   getIcon(icon: string): string {
     const map: Record<string, string> = {
-      code: '💻', cpu: '⚡', server: '⚙️', 'shield-check': '🛡️', cloud: '☁️', users: '👥',
+      code: '💻', cpu: '⚡', server: '⚙️', 'shield-check': '🛡️', cloud: '☁️', search: '🔎', social: '📣',
     };
     return map[icon] || '🚀';
+  }
+
+  private withMarketingServices(services: any[]) {
+    const visibleServices = services.filter((service) => service.slug !== 'dedicated-engineering-teams');
+    const slugs = new Set(visibleServices.map((service) => service.slug));
+    return [
+      ...visibleServices,
+      ...this.marketingServices().filter((service) => !slugs.has(service.slug)),
+    ].sort((a, b) => (a.displayOrder ?? 999) - (b.displayOrder ?? 999));
+  }
+
+  private marketingServices() {
+    return [
+      { slug: 'seo', title: 'SEO', icon: 'search', shortDesc: 'Technical, on-page, and local SEO improvements that help customers find your business through organic search.', customerProblem: 'A polished website still loses leads when it is not structured, written, and indexed for search visibility.', displayOrder: 6 },
+      { slug: 'social-media-marketing', title: 'Social Media Marketing', icon: 'social', shortDesc: 'Organic social media planning, content calendars, creative posts, and profile management without paid boosting.', customerProblem: 'Inconsistent posting and unclear messaging make it difficult to build trust and stay visible online.', displayOrder: 7 },
+    ];
   }
 
   private getFallbackServices() {
@@ -119,7 +135,7 @@ export class ServicesComponent implements OnInit {
       { slug: 'backend-api-development', title: 'Backend & API Development', icon: 'server', shortDesc: 'Robust RESTful and GraphQL APIs, microservices architecture, and secure enterprise integration layers.', customerProblem: 'Legacy APIs crash under peak concurrency.' },
       { slug: 'qa-and-test-automation', title: 'QA & Test Automation', icon: 'shield-check', shortDesc: 'Independent quality engineering, automated regression testing, performance profiling, and security testing.', customerProblem: 'Releasing unverified software damages brand trust.' },
       { slug: 'cloud-deployment-devops', title: 'Cloud Deployment & DevOps', icon: 'cloud', shortDesc: 'Automated CI/CD pipelines, Docker containerization, cloud infrastructure management, and monitoring.', customerProblem: 'Manual server deployments are error-prone.' },
-      { slug: 'dedicated-engineering-teams', title: 'Dedicated Engineering Teams', icon: 'users', shortDesc: 'Extend your product team with dedicated Sri Lankan frontend, backend, and QA software engineers.', customerProblem: 'High local developer hiring costs in international markets.' },
+      ...this.marketingServices(),
     ];
   }
 }

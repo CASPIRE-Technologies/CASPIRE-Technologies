@@ -13,10 +13,10 @@ import { ApiService } from '../../core/services/api.service';
     <!-- Header -->
     <section class="page-header">
       <div class="container">
-        <span class="badge badge-teal mb-2">Technical Knowledge Base</span>
-        <h1>Insights, Engineering & SME Articles</h1>
+        <span class="badge badge-teal mb-2">Company Blog</span>
+        <h1>Blog</h1>
         <p class="header-lead">
-          Practical perspectives on software modernization, independent quality engineering, cloud security, and digital payment compliance.
+          Practical articles on software modernization, search visibility, digital marketing, quality engineering, and secure cloud operations.
         </p>
       </div>
     </section>
@@ -40,7 +40,7 @@ import { ApiService } from '../../core/services/api.service';
         <div class="articles-grid">
           <div *ngFor="let post of posts()" class="card article-card">
             <div class="article-meta">
-              <span class="badge badge-navy">{{ post.category?.name || 'Insight' }}</span>
+              <span class="badge badge-navy">{{ post.category?.name || 'Blog' }}</span>
               <span class="read-time">{{ post.readTimeMinutes }} min read</span>
             </div>
             
@@ -49,7 +49,7 @@ import { ApiService } from '../../core/services/api.service';
 
             <div class="card-footer mt-4">
               <span class="author">By {{ post.authorName }}</span>
-              <a [routerLink]="['/insights', post.slug]" class="btn-read">Read Article →</a>
+              <a [routerLink]="['/blog', post.slug]" class="btn-read">Read Article →</a>
             </div>
           </div>
         </div>
@@ -118,8 +118,8 @@ export class InsightsComponent implements OnInit {
 
   ngOnInit() {
     this.seo.updateMeta({
-      title: 'Insights & Technical Articles | Software Engineering & Security',
-      description: 'Read technical articles on SME software digitization, independent QA testing, digital payments, and cloud security.',
+      title: 'Blog | Software, SEO & Digital Marketing Articles',
+      description: 'Read blog articles on software digitization, SEO, social media marketing, independent QA testing, digital payments, and cloud security.',
     });
     this.fetchPosts();
   }

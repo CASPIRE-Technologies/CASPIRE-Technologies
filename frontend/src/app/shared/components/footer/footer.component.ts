@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { siteContent } from '../../../site-content';
 
 @Component({
   selector: 'app-footer',
@@ -12,8 +13,8 @@ import { CommonModule } from '@angular/common';
         <!-- Brand Summary Column -->
         <div class="footer-col brand-col">
           <div class="brand-logo">
-            <div class="logo-mark">A</div>
-            <span class="brand-name">APEX SOFTWARE ENGINEERING</span>
+            <img class="logo-image" [src]="content.brand.logo.src" [alt]="content.brand.logo.alt" />
+            <span class="brand-name">{{ content.brand.name }}</span>
           </div>
           <p class="brand-desc">
             An end-to-end software engineering and digital transformation partner delivering secure, reliable and scalable business solutions for Sri Lankan enterprises and international clients.
@@ -21,15 +22,15 @@ import { CommonModule } from '@angular/common';
           <div class="contact-meta">
             <div class="meta-item">
               <span class="meta-icon">📍</span>
-              <span>Level 12, West Tower, World Trade Center, Colombo 01, Sri Lanka</span>
+              <span>{{ content.contact.address.full }}</span>
             </div>
             <div class="meta-item">
               <span class="meta-icon">✉️</span>
-              <a href="mailto:contact@apexsoftware.lk">contact&#64;apexsoftware.lk</a>
+              <a [href]="content.contact.email.href">{{ content.contact.email.value }}</a>
             </div>
             <div class="meta-item">
               <span class="meta-icon">📞</span>
-              <a href="tel:+94112345678">+94 11 234 5678</a>
+              <a [href]="content.contact.telephone.href">{{ content.contact.telephone.value }}</a>
             </div>
           </div>
         </div>
@@ -43,7 +44,8 @@ import { CommonModule } from '@angular/common';
             <li><a routerLink="/services/backend-api-development">Backend & API Development</a></li>
             <li><a routerLink="/services/qa-and-test-automation">QA & Test Automation</a></li>
             <li><a routerLink="/services/cloud-deployment-devops">Cloud Deployment & DevOps</a></li>
-            <li><a routerLink="/services/dedicated-engineering-teams">Dedicated Engineering Teams</a></li>
+            <li><a routerLink="/services/seo">SEO</a></li>
+            <li><a routerLink="/services/social-media-marketing">Social Media Marketing</a></li>
           </ul>
         </div>
 
@@ -67,20 +69,20 @@ import { CommonModule } from '@angular/common';
             <li><a routerLink="/solutions">Solution Concepts</a></li>
             <li><a routerLink="/delivery-process">Delivery Process</a></li>
             <li><a routerLink="/portfolio">Case Studies</a></li>
-            <li><a routerLink="/insights">Insights & Blog</a></li>
+            <li><a routerLink="/blog">Blog</a></li>
             <li><a routerLink="/contact">Contact Consultation</a></li>
           </ul>
           
           <div class="social-actions mt-4">
-            <a href="https://www.linkedin.com/company/apex-software-lk" target="_blank" rel="noopener" class="social-btn">LinkedIn</a>
-            <a href="https://wa.me/94771234567" target="_blank" rel="noopener" class="social-btn whatsapp-btn">WhatsApp Us</a>
+            <a [href]="content.contact.linkedin.href" target="_blank" rel="noopener" class="social-btn">LinkedIn</a>
+            <a [href]="content.contact.whatsapp.href" target="_blank" rel="noopener" class="social-btn whatsapp-btn">WhatsApp Us</a>
           </div>
         </div>
       </div>
 
       <div class="footer-bottom">
         <div class="container bottom-container">
-          <p>&copy; {{ currentYear }} Apex Software Engineering (Pvt) Ltd. All rights reserved.</p>
+          <p>&copy; {{ currentYear }} {{ content.brand.legalName }}. All rights reserved.</p>
           <div class="legal-links">
             <a routerLink="/privacy-policy">Privacy Policy</a>
             <a routerLink="/cookie-policy">Cookie Policy</a>
@@ -110,15 +112,10 @@ import { CommonModule } from '@angular/common';
       gap: 0.75rem;
       margin-bottom: 1rem;
     }
-    .logo-mark {
+    .logo-image {
       width: 36px;
       height: 36px;
-      background: var(--color-teal-dark);
-      color: #ffffff;
-      font-weight: 800;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      object-fit: contain;
       border-radius: var(--radius-sm);
     }
     .brand-name {
@@ -232,5 +229,6 @@ import { CommonModule } from '@angular/common';
   `]
 })
 export class FooterComponent {
+  content = siteContent;
   currentYear = new Date().getFullYear();
 }

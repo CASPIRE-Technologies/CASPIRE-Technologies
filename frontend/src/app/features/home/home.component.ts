@@ -35,34 +35,6 @@ import { ApiService } from '../../core/services/api.service';
           </div>
         </div>
 
-        <div class="hero-visual">
-          <div class="hero-card-stack">
-            <div class="visual-card visual-card-main">
-              <div class="card-header">
-                <span class="status-indicator"></span>
-                <span>Apex Engineering Dashboard</span>
-              </div>
-              <div class="code-snippet">
-                <span class="token-keyword">const</span> solution = <span class="token-keyword">await</span> <span class="token-function">buildStack</span>({{ '{' }}<br>
-                &nbsp;&nbsp;frontend: <span class="token-string">'Angular Standalone + Signals'</span>,<br>
-                &nbsp;&nbsp;backend: <span class="token-string">'NestJS REST API + Prisma'</span>,<br>
-                &nbsp;&nbsp;quality: <span class="token-string">'Independent QA & Automation'</span>,<br>
-                &nbsp;&nbsp;security: <span class="token-string">'Tokenized Auth + Rate Limiting'</span><br>
-                {{ '}' }}).<span class="token-function">deploy</span>();
-              </div>
-              <div class="card-footer-stats">
-                <div class="stat-box">
-                  <span class="stat-num">100%</span>
-                  <span class="stat-label">Code Ownership</span>
-                </div>
-                <div class="stat-box">
-                  <span class="stat-num">24/7</span>
-                  <span class="stat-label">Managed SLA</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -269,12 +241,26 @@ import { ApiService } from '../../core/services/api.service';
       border-bottom-color: linear-gradient(to down, red, orange);
       background-position: center;
       color: #ffffff;
-      padding: 5rem 0 6rem 0;
+      padding: 5.5rem 0 10rem 0;
       position: relative;
       overflow: hidden;
+      min-height: 540px;
+      display: flex;
+      align-items: center;
 
-      .hero-title { color: #ffffff; margin-bottom: 1.25rem; }
-      .hero-subtitle { color: #cbd5e1; font-size: 1.25rem; max-width: 600px; margin-bottom: 2rem; }
+      .hero-title {
+        color: #ffffff;
+        margin: 0 auto 1.25rem auto;
+        max-width: 760px;
+        text-shadow: 0 3px 18px rgba(0, 0, 0, 0.45);
+      }
+      .hero-subtitle {
+        color: #f8fafc;
+        font-size: 1.25rem;
+        max-width: 650px;
+        margin: 0 auto 2rem auto;
+        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.45);
+      }
     }
     .hero-video {
       position: absolute;
@@ -291,16 +277,22 @@ import { ApiService } from '../../core/services/api.service';
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background:
+        linear-gradient(to bottom, rgba(5, 5, 5, 0.3) 0%, rgba(5, 5, 5, 0.14) 45%, rgba(255, 255, 255, 0.72) 84%, #ffffff 100%),
+        linear-gradient(to right, rgba(5, 5, 5, 0.2), rgba(5, 5, 5, 0.08));
       z-index: 1;
     }
     .hero-container {
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 3rem;
+      display: flex;
+      justify-content: center;
       align-items: center;
       position: relative;
       z-index: 2;
+    }
+    .hero-content {
+      width: min(100%, 820px);
+      text-align: center;
+      margin: 0 auto;
     }
     .pulse-dot {
       width: 8px;
@@ -313,52 +305,7 @@ import { ApiService } from '../../core/services/api.service';
       display: flex;
       gap: 1rem;
       flex-wrap: wrap;
-    }
-    .hero-visual {
-      display: flex;
       justify-content: center;
-    }
-    .visual-card-main {
-      background: rgba(15, 23, 42, 0.4);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      border-radius: var(--radius-lg);
-      padding: 1.5rem;
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37), inset 0 1px 2px 0 rgba(255, 255, 255, 0.1);
-      font-family: monospace;
-      color: #e2e8f0;
-    }
-    .card-header {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.8125rem;
-      color: #94a3b8;
-      margin-bottom: 1rem;
-      padding-bottom: 0.75rem;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .status-indicator {
-      width: 10px;
-      height: 10px;
-      background-color: #10b981;
-      border-radius: 50%;
-    }
-    .code-snippet {
-      font-size: 0.875rem;
-      line-height: 1.7;
-      margin-bottom: 1.5rem;
-    }
-    .token-keyword { color: #f43f5e; }
-    .token-function { color: #38bdf8; }
-    .token-string { color: #a3e635; }
-    .card-footer-stats {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
     .stat-num { font-size: 1.25rem; font-weight: 800; color: var(--color-teal-accent); display: block; }
     .stat-label { font-size: 0.75rem; color: #94a3b8; }
@@ -534,7 +481,7 @@ export class HomeComponent implements OnInit {
     });
 
     this.api.get<any[]>('services').subscribe({
-      next: (res) => this.featuredServices.set(res.slice(0, 6)),
+      next: (res) => this.featuredServices.set(this.withMarketingServices(res).slice(0, 6)),
       error: () => this.featuredServices.set(this.getFallbackServices()),
     });
 
@@ -551,9 +498,26 @@ export class HomeComponent implements OnInit {
       server: '⚙️',
       'shield-check': '🛡️',
       cloud: '☁️',
-      users: '👥',
+      search: '🔎',
+      social: '📣',
     };
     return map[icon] || '🚀';
+  }
+
+  private withMarketingServices(services: any[]) {
+    const visibleServices = services.filter((service) => service.slug !== 'dedicated-engineering-teams');
+    const slugs = new Set(visibleServices.map((service) => service.slug));
+    return [
+      ...visibleServices,
+      ...this.marketingServices().filter((service) => !slugs.has(service.slug)),
+    ].sort((a, b) => (a.displayOrder ?? 999) - (b.displayOrder ?? 999));
+  }
+
+  private marketingServices() {
+    return [
+      { slug: 'seo', title: 'SEO', icon: 'search', shortDesc: 'Technical, on-page, and local SEO improvements that help customers find your business through organic search.', displayOrder: 6 },
+      { slug: 'social-media-marketing', title: 'Social Media Marketing', icon: 'social', shortDesc: 'Organic social media planning, content calendars, creative posts, and profile management without paid boosting.', displayOrder: 7 },
+    ];
   }
 
   private getFallbackServices() {
@@ -563,7 +527,7 @@ export class HomeComponent implements OnInit {
       { slug: 'backend-api-development', title: 'Backend & API Development', icon: 'server', shortDesc: 'Robust RESTful and GraphQL APIs, microservices architecture, and secure enterprise integration layers.' },
       { slug: 'qa-and-test-automation', title: 'QA & Test Automation', icon: 'shield-check', shortDesc: 'Independent quality engineering, automated regression testing, performance profiling, and security testing.' },
       { slug: 'cloud-deployment-devops', title: 'Cloud Deployment & DevOps', icon: 'cloud', shortDesc: 'Automated CI/CD pipelines, Docker containerization, cloud infrastructure management, and monitoring.' },
-      { slug: 'dedicated-engineering-teams', title: 'Dedicated Engineering Teams', icon: 'users', shortDesc: 'Extend your product team with dedicated Sri Lankan frontend, backend, and QA software engineers.' },
+      ...this.marketingServices(),
     ];
   }
 

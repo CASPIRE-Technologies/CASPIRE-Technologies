@@ -13,10 +13,10 @@ import { ApiService } from '../../core/services/api.service';
       <header class="page-header">
         <div class="container container-narrow">
           <nav class="breadcrumb">
-            <a routerLink="/">Home</a> / <a routerLink="/insights">Insights</a> / <span>{{ post()?.title }}</span>
+            <a routerLink="/">Home</a> / <a routerLink="/blog">Blog</a> / <span>{{ post()?.title }}</span>
           </nav>
           <div class="article-meta mt-3">
-            <span class="badge badge-teal">{{ post()?.category?.name || 'Insight' }}</span>
+            <span class="badge badge-teal">{{ post()?.category?.name || 'Blog' }}</span>
             <span class="meta-date">{{ post()?.publishedAt | date:'mediumDate' }}</span>
             <span class="meta-read">• {{ post()?.readTimeMinutes }} min read</span>
           </div>
@@ -30,12 +30,12 @@ import { ApiService } from '../../core/services/api.service';
 
         <!-- Related Articles -->
         <div *ngIf="related().length > 0" class="related-box mt-5">
-          <h3>Related Insights</h3>
+          <h3>Related Blog Posts</h3>
           <div class="related-grid mt-3">
             <div *ngFor="let rel of related()" class="card related-card">
               <h4>{{ rel.title }}</h4>
               <p>{{ rel.excerpt }}</p>
-              <a [routerLink]="['/insights', rel.slug]" class="btn-link">Read Article →</a>
+              <a [routerLink]="['/blog', rel.slug]" class="btn-link">Read Article →</a>
             </div>
           </div>
         </div>
@@ -119,7 +119,7 @@ export class InsightDetailComponent implements OnInit {
   private getFallbackPost(slug: string) {
     return {
       title: slug.replace(/-/g, ' ').toUpperCase(),
-      excerpt: 'Technical insights on software architecture, quality engineering, and digital transformation.',
+      excerpt: 'Blog article on software architecture, quality engineering, digital transformation, and online growth.',
       content: '<p>Many established businesses in Sri Lanka rely heavily on legacy spreadsheets, physical paper ledgers, or disconnected software tools...</p>',
       authorName: 'Apex Engineering Team',
       publishedAt: new Date(),

@@ -1,6 +1,7 @@
 import { Component, signal, inject } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { siteContent } from '../../../site-content';
 
 @Component({
   selector: 'app-header',
@@ -10,11 +11,11 @@ import { CommonModule } from '@angular/common';
     <header class="site-header" role="banner">
       <div class="container header-container">
         <!-- Brand Logo -->
-        <a routerLink="/" class="brand-logo" aria-label="Apex Software Engineering Homepage">
-          <div class="logo-mark">A</div>
+        <a routerLink="/" class="brand-logo" [attr.aria-label]="content.brand.homepageAriaLabel">
+          <img class="logo-image" [src]="content.brand.logo.src" [alt]="content.brand.logo.alt" />
           <div class="logo-text">
-            <span class="brand-name">APEX</span>
-            <span class="brand-tagline">SOFTWARE ENGINEERING</span>
+            <span class="brand-name">{{ content.brand.shortName }}</span>
+            <span class="brand-tagline">{{ content.brand.tagline }}</span>
           </div>
         </a>
 
@@ -27,7 +28,7 @@ import { CommonModule } from '@angular/common';
           <a routerLink="/delivery-process" routerLinkActive="active">Delivery Process</a>
           <a routerLink="/portfolio" routerLinkActive="active">Portfolio</a>
           <a routerLink="/about" routerLinkActive="active">About Us</a>
-          <a routerLink="/insights" routerLinkActive="active">Insights</a>
+          <a routerLink="/blog" routerLinkActive="active">Blog</a>
         </nav>
 
         <!-- CTA Action Buttons -->
@@ -56,7 +57,7 @@ import { CommonModule } from '@angular/common';
           <a routerLink="/delivery-process" (click)="closeMenu()">Delivery Process</a>
           <a routerLink="/portfolio" (click)="closeMenu()">Portfolio</a>
           <a routerLink="/about" (click)="closeMenu()">About Us</a>
-          <a routerLink="/insights" (click)="closeMenu()">Insights</a>
+          <a routerLink="/blog" (click)="closeMenu()">Blog</a>
           <a routerLink="/contact" class="btn btn-primary w-full mt-4" (click)="closeMenu()">Request Consultation</a>
         </nav>
       </div>
@@ -67,9 +68,9 @@ import { CommonModule } from '@angular/common';
       position: sticky;
       top: 0;
       z-index: 100;
-      background-color: rgba(255, 255, 255, 0.95);
+      background-color: #050505;
       backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid rgba(189, 156, 66, 0.45);
       height: 72px;
       display: flex;
       align-items: center;
@@ -86,19 +87,10 @@ import { CommonModule } from '@angular/common';
       gap: 0.75rem;
       text-decoration: none;
     }
-    .logo-mark {
-      width: 40px;
-      height: 40px;
-      background: linear-gradient(135deg, var(--color-navy-dark), var(--color-teal-dark));
-      color: #ffffff;
-      font-family: var(--font-family-heading);
-      font-weight: 800;
-      font-size: 1.5rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: var(--radius-md);
-      box-shadow: 0 2px 8px rgba(0, 119, 182, 0.3);
+    .logo-image {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
     }
     .logo-text {
       display: flex;
@@ -108,14 +100,14 @@ import { CommonModule } from '@angular/common';
       font-family: var(--font-family-heading);
       font-weight: 800;
       font-size: 1.25rem;
-      color: var(--color-navy-dark);
+      color: #ffffff;
       line-height: 1;
       letter-spacing: 0.05em;
     }
     .brand-tagline {
       font-size: 0.65rem;
       font-weight: 700;
-      color: var(--color-teal-dark);
+      color: var(--color-teal-accent);
       letter-spacing: 0.1em;
       margin-top: 2px;
     }
@@ -128,13 +120,13 @@ import { CommonModule } from '@angular/common';
         font-family: var(--font-family-heading);
         font-weight: 600;
         font-size: 0.9375rem;
-        color: var(--color-charcoal);
+        color: #f8fafc;
         padding: 0.5rem 0;
         border-bottom: 2px solid transparent;
         transition: all var(--transition-fast);
 
         &:hover, &.active {
-          color: var(--color-teal-dark);
+          color: var(--color-teal-accent);
           border-bottom-color: var(--color-teal-accent);
         }
       }
@@ -152,7 +144,7 @@ import { CommonModule } from '@angular/common';
       display: none;
       background: none;
       border: none;
-      color: var(--color-navy-dark);
+      color: var(--color-teal-accent);
       cursor: pointer;
       padding: 0.5rem;
     }
@@ -162,8 +154,8 @@ import { CommonModule } from '@angular/common';
       top: 72px;
       left: 0;
       right: 0;
-      background-color: var(--color-bg-surface);
-      border-bottom: 1px solid var(--color-border);
+      background-color: #050505;
+      border-bottom: 1px solid rgba(189, 156, 66, 0.45);
       padding: 1.5rem;
       box-shadow: var(--shadow-xl);
     }
@@ -176,7 +168,7 @@ import { CommonModule } from '@angular/common';
         font-family: var(--font-family-heading);
         font-size: 1.125rem;
         font-weight: 600;
-        color: var(--color-navy-dark);
+        color: #f8fafc;
       }
     }
     .w-full { width: 100%; }
@@ -190,6 +182,7 @@ import { CommonModule } from '@angular/common';
   `]
 })
 export class HeaderComponent {
+  content = siteContent;
   isMenuOpen = signal(false);
 
   toggleMenu() {
