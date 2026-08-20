@@ -7,11 +7,11 @@
 
 :root {
   /* Brand Palette */
-  --color-navy-dark: #0b192c;
-  --color-navy: #1e3e62;
-  --color-teal-accent: #00b4d8;
-  --color-teal-dark: #0077b6;
-  --color-teal-light: #e0f7fa;
+  --color-navy-dark: #050505;
+  --color-navy: #1a1207;
+  --color-teal-accent: #bd9c42;
+  --color-teal-dark: #bd9c42;
+  --color-teal-light: #f7efd9;
 
   /* Neutral Spectrum */
   --color-charcoal-dark: #0f172a;
@@ -71,6 +71,33 @@ body {
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 650ms ease,
+    transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .scroll-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* Focus Ring for WCAG 2.1 AA Accessibility */
@@ -149,13 +176,13 @@ a:hover { color: var(--color-navy-dark); }
 
 .btn-primary {
   background-color: var(--color-teal-dark);
-  color: #ffffff;
-  box-shadow: 0 4px 14px rgba(0, 119, 182, 0.35);
+  color: #050505;
+  box-shadow: 0 4px 14px rgba(189, 156, 66, 0.35);
 
   &:hover {
-    background-color: var(--color-navy-dark);
+    background-color: var(--color-teal-accent);
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(11, 25, 44, 0.3);
+    box-shadow: 0 6px 20px rgba(189, 156, 66, 0.3);
   }
 }
 
@@ -173,7 +200,7 @@ a:hover { color: var(--color-navy-dark); }
 
 .btn-accent {
   background: linear-gradient(135deg, var(--color-teal-accent), var(--color-teal-dark));
-  color: #ffffff;
+  color: #050505;
 
   &:hover {
     filter: brightness(1.1);

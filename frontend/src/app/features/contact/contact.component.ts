@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SeoService } from '../../core/services/seo.service';
 import { ApiService } from '../../core/services/api.service';
+import { siteContent } from '../../site-content';
 
 @Component({
   selector: 'app-contact',
@@ -97,7 +98,8 @@ import { ApiService } from '../../core/services/api.service';
                   <option value="Backend & API Development">Backend & API Development</option>
                   <option value="QA & Test Automation">QA & Test Automation</option>
                   <option value="Cloud Deployment & DevOps">Cloud Deployment & DevOps</option>
-                  <option value="Dedicated Engineering Teams">Dedicated Engineering Teams</option>
+                  <option value="SEO">SEO</option>
+                  <option value="Social Media Marketing">Social Media Marketing</option>
                   <option value="Other Technical Advisory">Other Technical Advisory</option>
                 </select>
                 <span *ngIf="isFieldInvalid('serviceOfInterest')" class="invalid-feedback">Please select a service.</span>
@@ -153,40 +155,40 @@ import { ApiService } from '../../core/services/api.service';
         <div class="direct-contact-col">
           <div class="card info-card">
             <h3>Direct Contact Channels</h3>
-            <p>Our business office and engineering center are located at the World Trade Center in Colombo.</p>
+            <p>{{ content.contact.intro }}</p>
 
             <div class="info-list mt-4">
               <div class="info-item">
                 <div class="info-icon">📍</div>
                 <div>
-                  <strong>Headquarters Address</strong>
-                  <p>Level 12, West Tower, World Trade Center, Colombo 01, Sri Lanka</p>
+                  <strong>{{ content.contact.address.label }}</strong>
+                  <p>{{ content.contact.address.full }}</p>
                 </div>
               </div>
 
               <div class="info-item">
                 <div class="info-icon">✉️</div>
                 <div>
-                  <strong>Primary Email</strong>
-                  <p><a href="mailto:contact@apexsoftware.lk">contact&#64;apexsoftware.lk</a></p>
+                  <strong>{{ content.contact.email.label }}</strong>
+                  <p><a [href]="content.contact.email.href">{{ content.contact.email.value }}</a></p>
                 </div>
               </div>
 
               <div class="info-item">
                 <div class="info-icon">📞</div>
                 <div>
-                  <strong>Office Telephone</strong>
-                  <p><a href="tel:+94112345678">+94 11 234 5678</a></p>
+                  <strong>{{ content.contact.telephone.label }}</strong>
+                  <p><a [href]="content.contact.telephone.href">{{ content.contact.telephone.value }}</a></p>
                 </div>
               </div>
 
               <div class="info-item">
                 <div class="info-icon">💬</div>
                 <div>
-                  <strong>WhatsApp Business</strong>
+                  <strong>{{ content.contact.whatsapp.label }}</strong>
                   <p>
-                    <a href="https://wa.me/94771234567" target="_blank" rel="noopener" class="whatsapp-link">
-                      Chat Direct on WhatsApp (+94 77 123 4567) →
+                    <a [href]="content.contact.whatsapp.href" target="_blank" rel="noopener" class="whatsapp-link">
+                      {{ content.contact.whatsapp.linkText }}
                     </a>
                   </p>
                 </div>
@@ -195,10 +197,10 @@ import { ApiService } from '../../core/services/api.service';
               <div class="info-item">
                 <div class="info-icon">💼</div>
                 <div>
-                  <strong>Official LinkedIn Page</strong>
+                  <strong>{{ content.contact.linkedin.label }}</strong>
                   <p>
-                    <a href="https://www.linkedin.com/company/apex-software-lk" target="_blank" rel="noopener">
-                      linkedin.com/company/apex-software-lk →
+                    <a [href]="content.contact.linkedin.href" target="_blank" rel="noopener">
+                      {{ content.contact.linkedin.display }}
                     </a>
                   </p>
                 </div>
@@ -318,6 +320,7 @@ export class ContactComponent implements OnInit {
   submitSuccess = signal(false);
   submitError = signal(false);
   responseMessage = signal('');
+  content = siteContent;
 
   ngOnInit() {
     this.seo.updateMeta({

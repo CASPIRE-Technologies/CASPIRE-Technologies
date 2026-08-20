@@ -195,6 +195,31 @@ export class ServiceDetailComponent implements OnInit {
   }
 
   private getFallbackService(slug: string) {
+    const services: Record<string, any> = {
+      seo: {
+        title: 'SEO',
+        shortDesc: 'Technical, on-page, and local SEO improvements that help customers find your business through organic search.',
+        customerProblem: 'A polished website still loses qualified leads when search engines cannot understand the site structure, content, local relevance, or technical quality.',
+        proposedSolution: 'A practical SEO program covering technical fixes, keyword-led content improvements, local business visibility, metadata, internal linking, and performance hygiene.',
+        mainCapabilities: JSON.stringify(['Technical SEO Audits', 'Keyword & Search Intent Mapping', 'On-page Metadata Improvements', 'Local SEO & Google Business Profile Guidance']),
+        typicalDeliverables: JSON.stringify(['SEO Audit Report', 'Keyword Plan', 'Optimized Page Titles & Meta Descriptions', 'Monthly Organic Visibility Recommendations']),
+        suitableIndustries: JSON.stringify(['SMEs & Corporates', 'Tourism & Hospitality', 'Retail & Distribution', 'Professional Services']),
+        deliveryApproach: 'We prioritize search improvements that compound over time, starting with technical health and high-intent pages before expanding content coverage.',
+      },
+      'social-media-marketing': {
+        title: 'Social Media Marketing',
+        shortDesc: 'Organic social media planning, content calendars, creative posts, and profile management without paid boosting.',
+        customerProblem: 'Many businesses post inconsistently, use unclear messaging, or rely on disconnected visuals that do not build trust with their target audience.',
+        proposedSolution: 'Organic social media marketing focused on content planning, brand-aligned messaging, post design, caption writing, scheduling, and profile consistency without paid boosting.',
+        mainCapabilities: JSON.stringify(['Organic Content Strategy', 'Monthly Content Calendars', 'Post Copy & Creative Direction', 'Profile Optimization']),
+        typicalDeliverables: JSON.stringify(['Social Media Content Plan', 'Designed Post Concepts', 'Captions & Hashtag Sets', 'Monthly Performance Review']),
+        suitableIndustries: JSON.stringify(['SMEs & Corporates', 'Tourism & Hospitality', 'Education & Training', 'Retail & Distribution']),
+        deliveryApproach: 'We build consistent organic visibility with planned content themes, clear messaging, and review cycles that keep posts aligned with business goals.',
+      },
+    };
+
+    if (services[slug]) return services[slug];
+
     return {
       title: slug.replace(/-/g, ' ').toUpperCase(),
       shortDesc: 'End-to-end software engineering service designed for performance, security, and long-term scalability.',

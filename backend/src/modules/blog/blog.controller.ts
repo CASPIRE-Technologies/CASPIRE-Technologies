@@ -6,7 +6,7 @@ import { RolesGuard } from '../../common/guards/roles.guard';
 import { Roles } from '../../common/decorators/roles.decorator';
 import { RoleType } from '@prisma/client';
 
-@ApiTags('Insights & Blog')
+@ApiTags('Blog')
 @Controller('v1/blog')
 export class BlogController {
   constructor(private readonly blogService: BlogService) {}
