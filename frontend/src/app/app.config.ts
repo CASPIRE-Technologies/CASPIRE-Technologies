@@ -3,6 +3,10 @@ import { provideRouter, withComponentInputBinding, withInMemoryScrolling } from 
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideClientHydration } from '@angular/platform-browser';
 import { routes } from './app.routes';
+import { AccountBookOutline, AccountBookTwoTone } from '@ant-design/icons-angular/icons';
+import { provideNzIcons } from 'ng-zorro-antd/icon';
+
+const icons = [AccountBookTwoTone, AccountBookOutline];
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,6 +17,8 @@ export const appConfig: ApplicationConfig = {
       withInMemoryScrolling({ scrollPositionRestoration: 'enabled', anchorScrolling: 'enabled' })
     ),
     provideHttpClient(withFetch()),
-    provideClientHydration()
+    provideClientHydration(),
+    provideNzIcons(icons),
+    
   ]
 };
