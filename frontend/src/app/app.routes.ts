@@ -16,6 +16,7 @@ import { NotFoundComponent } from './features/error/not-found.component';
 import { AdminLoginComponent } from './features/admin/admin-login.component';
 import { AdminDashboardComponent } from './features/admin/admin-dashboard.component';
 import { authGuard } from './core/guards/auth.guard';
+import { ProjectsComponent } from './features/projects/projects.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent, title: 'Apex Software Engineering | Sri Lanka' },
@@ -26,7 +27,7 @@ export const routes: Routes = [
   { path: 'industries/:slug', component: IndustryDetailComponent },
   { path: 'solutions', component: SolutionsComponent, title: 'Solution Blueprints | Apex Software Engineering' },
   { path: 'delivery-process', component: DeliveryProcessComponent, title: '9-Step Delivery Process | Apex Software Engineering' },
-  { path: 'portfolio', component: PortfolioComponent, title: 'Case Studies | Apex Software Engineering' },
+  { path: 'projects', component: ProjectsComponent, title: 'Case Studies | CASPIRE Software Engineering' },
   { path: 'blog', component: InsightsComponent, title: 'Blog | Apex Software Engineering' },
   { path: 'blog/:slug', component: InsightDetailComponent },
   { path: 'insights', redirectTo: 'blog', pathMatch: 'full' },

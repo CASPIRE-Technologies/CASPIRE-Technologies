@@ -249,7 +249,6 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
   styles: [`
     .hero-section {
       background-size: cover;
-      border-bottom-color: linear-gradient(to down, red, orange);
       background-position: center;
       color: #ffffff;
       padding: 5.5rem 0 10rem 0;
@@ -602,7 +601,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     .cta-lead { font-size: 1.25rem; max-width: 700px; margin: 0.5rem auto 0 auto; }
     .cta-buttons { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
     .cta-buttons .btn-secondary { display: inline-flex; align-items: center; gap: 0.5rem; }
-    .text-center { text-center: center; }
+    .text-center { text-align: center; }
     .mb-2 { margin-bottom: 0.5rem; }
     .mb-3 { margin-bottom: 0.75rem; }
     .mb-4 { margin-bottom: 1rem; }
@@ -633,9 +632,40 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
       }
     }
 
+    /* ===== Responsive ===== */
+    @media (max-width: 1024px) {
+      .managed-grid { grid-template-columns: 1fr; gap: 2rem; }
+      .managed-card { order: -1; }
+    }
+
     @media (max-width: 900px) {
-      .hero-container { grid-template-columns: 1fr; }
-      .managed-grid { grid-template-columns: 1fr; }
+      .hero-container { flex-direction: column; }
+    }
+
+    @media (max-width: 767px) {
+      .hero-section {
+        padding: 3.5rem 0 5rem 0;
+        min-height: 0;
+      }
+      .hero-subtitle { font-size: 1.0625rem; }
+      .hero-actions { gap: 0.75rem; }
+
+      .trust-container { flex-direction: column; align-items: stretch; gap: 1.5rem; }
+      .trust-grid { flex-direction: column; align-items: flex-start; gap: 1.25rem; }
+
+      .section-header { margin-bottom: 2.25rem; }
+
+      .managed-card { padding: 1.5rem; }
+
+      .cta-buttons { flex-direction: column; align-items: stretch; }
+      .cta-buttons .btn-secondary { justify-content: center; }
+    }
+
+    @media (max-width: 480px) {
+      .problems-grid,
+      .services-grid { grid-template-columns: 1fr; }
+      .industries-grid { grid-template-columns: 1fr; }
+      .process-timeline { grid-template-columns: repeat(2, 1fr); }
     }
   `]
 })

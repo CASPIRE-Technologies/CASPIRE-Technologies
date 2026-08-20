@@ -1,22 +1,30 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy, ElementRef, inject, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { SeoService } from '../../core/services/seo.service';
 import { ApiService } from '../../core/services/api.service';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 
 @Component({
   selector: 'app-service-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink],
+  imports: [CommonModule, RouterLink, NzIconModule],
   template: `
     <div *ngIf="service()" class="service-detail-page">
       <!-- Breadcrumb & Header -->
       <section class="page-header">
         <div class="container">
           <nav class="breadcrumb" aria-label="Breadcrumb">
-            <a routerLink="/">Home</a> / <a routerLink="/services">Services</a> / <span>{{ service()?.title }}</span>
+            <a routerLink="/">Home</a>
+            <span nz-icon nzType="right" nzTheme="outline" class="crumb-sep"></span>
+            <a routerLink="/services">Services</a>
+            <span nz-icon nzType="right" nzTheme="outline" class="crumb-sep"></span>
+            <span>{{ service()?.title }}</span>
           </nav>
-          <h1 class="mt-2">{{ service()?.title }}</h1>
+          <div class="badge badge-teal mb-2 mt-3">
+            <span class="pulse-dot"></span> Service Details
+          </div>
+          <h1>{{ service()?.title }}</h1>
           <p class="header-lead">{{ service()?.shortDesc }}</p>
         </div>
       </section>
@@ -25,12 +33,18 @@ import { ApiService } from '../../core/services/api.service';
       <section class="section section-alt">
         <div class="container">
           <div class="grid-2">
-            <div class="card card-problem">
+            <div class="card card-problem reveal">
+              <div class="card-icon-wrap icon-danger">
+                <span nz-icon nzType="warning" nzTheme="outline"></span>
+              </div>
               <div class="card-tag">The Business Problem</div>
               <h3>Customer Challenge</h3>
               <p>{{ service()?.customerProblem }}</p>
             </div>
-            <div class="card card-solution">
+            <div class="card card-solution reveal">
+              <div class="card-icon-wrap icon-success">
+                <span nz-icon nzType="bulb" nzTheme="outline"></span>
+              </div>
               <div class="card-tag">Our Engineering Solution</div>
               <h3>Proposed Approach</h3>
               <p>{{ service()?.proposedSolution }}</p>
@@ -43,19 +57,23 @@ import { ApiService } from '../../core/services/api.service';
       <section class="section">
         <div class="container">
           <div class="grid-2">
-            <div>
+            <div class="reveal">
+              <span class="badge badge-navy mb-2">What We Build</span>
               <h2>Main Technical Capabilities</h2>
               <ul class="detail-list">
                 <li *ngFor="let cap of parseList(service()?.mainCapabilities)">
-                  <span class="check-icon">✓</span> {{ cap }}
+                  <span nz-icon nzType="check-circle" nzTheme="fill" class="check-icon"></span>
+                  {{ cap }}
                 </li>
               </ul>
             </div>
-            <div>
+            <div class="reveal">
+              <span class="badge badge-teal mb-2">What You Receive</span>
               <h2>Typical Deliverables</h2>
               <ul class="detail-list">
                 <li *ngFor="let del of parseList(service()?.typicalDeliverables)">
-                  <span class="check-icon">📦</span> {{ del }}
+                  <span nz-icon nzType="inbox" nzTheme="outline" class="check-icon deliverable-icon"></span>
+                  {{ del }}
                 </li>
               </ul>
             </div>
@@ -67,14 +85,20 @@ import { ApiService } from '../../core/services/api.service';
       <section class="section section-alt">
         <div class="container">
           <div class="grid-2">
-            <div class="card">
+            <div class="card reveal">
+              <div class="card-icon-wrap icon-navy">
+                <span nz-icon nzType="deployment-unit" nzTheme="outline"></span>
+              </div>
               <h3>Delivery Methodology</h3>
               <p>{{ service()?.deliveryApproach }}</p>
             </div>
-            <div class="card">
+            <div class="card reveal">
+              <div class="card-icon-wrap icon-teal">
+                <span nz-icon nzType="apartment" nzTheme="outline"></span>
+              </div>
               <h3>Suitable Industries</h3>
               <div class="pills-flex">
-                <span *ngFor="let ind of parseList(service()?.suitableIndustries)" class="badge badge-navy">
+                <span *ngFor="let ind of parseList(service()?.suitableIndustries)" class="badge badge-navy pill-hover">
                   {{ ind }}
                 </span>
               </div>
@@ -85,7 +109,7 @@ import { ApiService } from '../../core/services/api.service';
 
       <!-- CTA -->
       <section class="section section-dark text-center">
-        <div class="container">
+        <div class="container reveal">
           <h2>Ready to get started with {{ service()?.title }}?</h2>
           <p class="cta-lead">Speak with our technical team to discuss project requirements, timelines, and cost estimates.</p>
           <a routerLink="/contact" [queryParams]="{ service: service()?.title }" class="btn btn-primary mt-4">
@@ -110,11 +134,55 @@ import { ApiService } from '../../core/services/api.service';
     .breadcrumb {
       font-size: 0.875rem;
       color: #94a3b8;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.4rem;
       a { color: var(--color-teal-accent); }
-      span { color: #ffffff; }
+      span:not(.crumb-sep) { color: #ffffff; }
     }
+    .crumb-sep { font-size: 0.625rem; color: #64748b; }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background-color: var(--color-teal-accent);
+      border-radius: 50%;
+      display: inline-block;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.55; transform: scale(1.35); }
+    }
+
     .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
-    
+
+    .card {
+      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.1);
+    }
+
+    .card-icon-wrap {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      font-size: 1.375rem;
+      margin-bottom: 1rem;
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .card:hover .card-icon-wrap { transform: scale(1.1) rotate(-4deg); }
+    .icon-danger { background: rgba(239, 68, 68, 0.1); color: var(--color-danger); }
+    .icon-success { background: rgba(16, 185, 129, 0.1); color: var(--color-success); }
+    .icon-navy { background: var(--color-bg-surface-elevated, #f8fafc); color: var(--color-navy-dark); }
+    .icon-teal { background: var(--color-bg-surface-elevated, #f0fdfa); color: var(--color-teal-dark); }
+
     .card-problem {
       border-top: 4px solid var(--color-danger);
       .card-tag { font-size: 0.75rem; font-weight: 700; color: var(--color-danger); text-transform: uppercase; margin-bottom: 0.5rem; }
@@ -135,23 +203,57 @@ import { ApiService } from '../../core/services/api.service';
         gap: 0.75rem;
       }
     }
-    .check-icon { font-weight: 800; color: var(--color-teal-dark); }
+    .check-icon { font-size: 1.125rem; color: var(--color-teal-dark); flex-shrink: 0; }
+    .deliverable-icon { color: var(--color-navy-dark); }
+
     .pills-flex { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem; }
+    .pill-hover { transition: transform 0.25s ease; cursor: default; }
+    .pill-hover:hover { transform: translateY(-2px); }
 
     .cta-lead { font-size: 1.25rem; max-width: 650px; margin: 0.5rem auto 0 auto; color: #cbd5e1; }
     .text-center { text-align: center; }
-    .mt-2 { margin-top: 0.5rem; }
+    .mb-2 { margin-bottom: 0.5rem; }
+    .mt-3 { margin-top: 0.75rem; }
     .mt-4 { margin-top: 1rem; }
 
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .pulse-dot { animation: none; }
+    }
+
+    /* ===== Responsive ===== */
     @media (max-width: 768px) {
-      .grid-2 { grid-template-columns: 1fr; }
+      .grid-2 { grid-template-columns: 1fr; gap: 1.5rem; }
+    }
+
+    @media (max-width: 767px) {
+      .page-header { padding: 2.5rem 0; }
+      .card { padding: 1.25rem; }
+    }
+
+    @media (max-width: 480px) {
+      .card-icon-wrap { width: 40px; height: 40px; font-size: 1.125rem; }
+      .pills-flex { gap: 0.375rem; }
     }
   `]
 })
-export class ServiceDetailComponent implements OnInit {
+export class ServiceDetailComponent implements OnInit, AfterViewInit, OnDestroy {
   private route = inject(ActivatedRoute);
   private api = inject(ApiService);
   private seo = inject(SeoService);
+  private el = inject(ElementRef);
+  private observer?: IntersectionObserver;
 
   service = signal<any | null>(null);
   loading = signal(true);
@@ -165,6 +267,29 @@ export class ServiceDetailComponent implements OnInit {
     });
   }
 
+  ngAfterViewInit() {
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            this.observer?.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+  }
+
+  ngOnDestroy() {
+    this.observer?.disconnect();
+  }
+
+  private observeReveal() {
+    const elements = this.el.nativeElement.querySelectorAll('.reveal:not(.revealed)');
+    elements.forEach((elToObserve: Element) => this.observer?.observe(elToObserve));
+  }
+
   private loadService(slug: string) {
     this.loading.set(true);
     this.api.get<any>(`services/${slug}`).subscribe({
@@ -175,10 +300,12 @@ export class ServiceDetailComponent implements OnInit {
           title: data.title,
           description: data.shortDesc,
         });
+        setTimeout(() => this.observeReveal());
       },
       error: () => {
         this.loading.set(false);
         this.service.set(this.getFallbackService(slug));
+        setTimeout(() => this.observeReveal());
       },
     });
   }

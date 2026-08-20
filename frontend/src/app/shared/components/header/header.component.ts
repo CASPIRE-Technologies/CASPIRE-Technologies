@@ -26,7 +26,7 @@ import { siteContent } from '../../../site-content';
           <a routerLink="/industries" routerLinkActive="active">Industries</a>
           <a routerLink="/solutions" routerLinkActive="active">Solutions</a>
           <a routerLink="/delivery-process" routerLinkActive="active">Delivery Process</a>
-          <a routerLink="/portfolio" routerLinkActive="active">Portfolio</a>
+          <a routerLink="/projects" routerLinkActive="active">Projects</a>
           <a routerLink="/about" routerLinkActive="active">About Us</a>
           <a routerLink="/blog" routerLinkActive="active">Blog</a>
         </nav>
@@ -292,6 +292,37 @@ import { siteContent } from '../../../site-content';
     @media (max-width: 1024px) {
       .desktop-nav { display: none; }
       .mobile-menu-btn { display: flex; }
+    }
+
+    @media (max-width: 640px) {
+      .site-header {
+        height: 64px;
+      }
+
+      .brand-tagline {
+        display: none;
+      }
+
+      .brand-name {
+        font-size: 1rem;
+      }
+
+      .logo-image {
+        width: 42px;
+        height: 42px;
+      }
+
+      .header-actions .btn-sm {
+        display: none;
+      }
+
+      .mobile-backdrop {
+        inset: 64px 0 0 0;
+      }
+
+      .mobile-drawer {
+        top: 64px;
+      }
     }
   `]
 })
