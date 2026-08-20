@@ -1,0 +1,231 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum RoleType {
+  ADMIN
+  SUPERADMIN
+}
+
+enum EnquiryStatus {
+  NEW
+  IN_REVIEW
+  CONTACTED
+  CLOSED
+}
+
+model User {
+  id           String        @id @default(uuid())
+  email        String        @unique
+  passwordHash String
+  name         String
+  role         RoleType      @default(ADMIN)
+  status       String        @default("ACTIVE")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  tokens       RefreshToken[]
+  notes        EnquiryNote[]
+  auditLogs    AuditLog[]
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  revoked   Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@map("refresh_tokens")
+}
+
+model Service {
+  id                  String   @id @default(uuid())
+  slug                String   @unique
+  title               String
+  shortDesc           String   @db.Text
+  fullDesc            String   @db.Text
+  icon                String
+  customerProblem     String   @db.Text
+  proposedSolution    String   @db.Text
+  mainCapabilities    String   @db.Text // JSON string or comma-separated list
+  typicalDeliverables String   @db.Text // JSON string
+  suitableIndustries  String   @db.Text // JSON string
+  deliveryApproach    String   @db.Text
+  isPublished         Boolean  @default(true)
+  displayOrder        Int      @default(0)
+  metaTitle           String?
+  metaDescription     String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  @@map("services")
+}
+
+model Industry {
+  id              String   @id @default(uuid())
+  slug            String   @unique
+  title           String
+  shortDesc       String   @db.Text
+  fullDesc        String   @db.Text
+  useCases        String   @db.Text // JSON string array of realistic use cases
+  icon            String
+  isPublished     Boolean  @default(true)
+  displayOrder    Int      @default(0)
+  metaTitle       String?
+  metaDescription String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("industries")
+}
+
+model PortfolioProject {
+  id             String   @id @default(uuid())
+  slug           String   @unique
+  title          String
+  summary        String   @db.Text
+  clientIndustry String
+  challenges     String   @db.Text
+  solution       String   @db.Text
+  outcomes       String   @db.Text // JSON array of qualitative outcome bullets
+  demoUrl        String?
+  imageUrl       String?
+  technologies   String   @db.Text // JSON array of tech stack tags
+  isFeatured     Boolean  @default(false)
+  isPublished    Boolean  @default(true)
+  displayOrder   Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("portfolio_projects")
+}
+
+model PortfolioTechnology {
+  id       String @id @default(uuid())
+  name     String @unique
+  category String
+  icon     String?
+
+  @@map("portfolio_technologies")
+}
+
+model BlogCategory {
+  id          String     @id @default(uuid())
+  slug        String     @unique
+  name        String
+  description String?    @db.Text
+  posts       BlogPost[]
+
+  @@map("blog_categories")
+}
+
+model BlogTag {
+  id   String @id @default(uuid())
+  slug String @unique
+  name String
+
+  @@map("blog_tags")
+}
+
+model BlogPost {
+  id              String       @id @default(uuid())
+  slug            String       @unique
+  title           String
+  excerpt         String       @db.Text
+  content         String       @db.Text
+  categoryId      String
+  category        BlogCategory @relation(fields: [categoryId], references: [id])
+  tags            String       @db.Text // JSON array of tag names
+  authorName      String       @default("Apex Engineering Team")
+  readTimeMinutes Int          @default(5)
+  isPublished     Boolean      @default(true)
+  metaTitle       String?
+  metaDescription String?
+  publishedAt     DateTime     @default(now())
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
+
+  @@map("blog_posts")
+}
+
+model Enquiry {
+  id                    String        @id @default(uuid())
+  name                  String
+  company               String
+  email                 String
+  telephone             String
+  country               String        @default("Sri Lanka")
+  serviceOfInterest     String
+  budgetRange           String
+  preferredContactMethod String
+  description           String        @db.Text
+  status                EnquiryStatus @default(NEW)
+  consent               Boolean       @default(true)
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  notes                 EnquiryNote[]
+
+  @@map("enquiries")
+}
+
+model EnquiryNote {
+  id        String   @id @default(uuid())
+  enquiryId String
+  enquiry   Enquiry  @relation(fields: [enquiryId], references: [id], onDelete: Cascade)
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  note      String   @db.Text
+  createdAt DateTime @default(now())
+
+  @@map("enquiry_notes")
+}
+
+model TeamMember {
+  id             String   @id @default(uuid())
+  name           String
+  title          String
+  roleCategory   String   // Frontend, Backend, QA, Cloud, Leadership
+  bio            String   @db.Text
+  capabilityArea String
+  linkedinUrl    String?
+  isPublished    Boolean  @default(true)
+  displayOrder   Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@map("team_members")
+}
+
+model SiteSetting {
+  id          String   @id @default(uuid())
+  key         String   @unique
+  value       String   @db.Text
+  description String?
+  updatedAt   DateTime @updatedAt
+
+  @@map("site_settings")
+}
+
+model AuditLog {
+  id         String   @id @default(uuid())
+  userId     String?
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action     String
+  entityType String
+  entityId   String?
+  details    String?  @db.Text
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime @default(now())
+
+  @@map("audit_logs")
+}
