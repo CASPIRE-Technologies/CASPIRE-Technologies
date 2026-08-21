@@ -14,7 +14,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     <section class="hero-section" aria-label="Hero Introduction">
       <!-- Background Video -->
       <video class="hero-video" autoplay [muted]="true" loop playsinline>
-        <source src="./../../../assets/videos/Hero_video_for_tech_company_202608201455.mp4" type="video/mp4" >
+        <source src="./../../../assets/videos/mixkit-computer-code-in-the-screen-9757-hd-ready.mp4" type="video/mp4" >
         Your browser does not support the video tag.
       </video>
 
@@ -288,8 +288,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
       width: 100%;
       height: 100%;
       background:
-        linear-gradient(to bottom, rgba(5, 5, 5, 0.3) 0%, rgba(5, 5, 5, 0.14) 45%, rgba(255, 255, 255, 0.72) 84%, #ffffff 100%),
-        linear-gradient(to right, rgba(5, 5, 5, 0.2), rgba(5, 5, 5, 0.08));
+        linear-gradient(to bottom, rgba(5, 5, 5, 0.62) 0%, rgba(5, 5, 5, 0.46) 45%, rgba(255, 255, 255, 0.7) 84%, #ffffff 100%),
+        linear-gradient(to right, rgba(5, 5, 5, 0.42), rgba(5, 5, 5, 0.18));
       z-index: 1;
     }
     .hero-container {
