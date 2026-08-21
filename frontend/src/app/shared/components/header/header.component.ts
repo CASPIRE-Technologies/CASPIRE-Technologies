@@ -58,7 +58,7 @@ import { siteContent } from '../../../site-content';
           <a routerLink="/industries" (click)="closeMenu()">Industries</a>
           <a routerLink="/solutions" (click)="closeMenu()">Solutions</a>
           <a routerLink="/delivery-process" (click)="closeMenu()">Delivery Process</a>
-          <a routerLink="/portfolio" (click)="closeMenu()">Portfolio</a>
+          <a routerLink="/projects" (click)="closeMenu()">Projects</a>
           <a routerLink="/about" (click)="closeMenu()">About Us</a>
           <a routerLink="/blog" (click)="closeMenu()">Blog</a>
           <a routerLink="/contact" class="btn btn-primary w-full mt-4" (click)="closeMenu()">Request Consultation</a>
