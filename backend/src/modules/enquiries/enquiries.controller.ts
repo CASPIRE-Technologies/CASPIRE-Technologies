@@ -1,12 +1,12 @@
 import { Controller, Post, Get, Put, Param, Body, Query, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
-import { EnquiriesService } from './enquiries.service';
-import { CreateEnquiryDto, UpdateEnquiryStatusDto, AddEnquiryNoteDto } from './dto/enquiry.dto';
-import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
-import { RolesGuard } from '../../common/guards/roles.guard';
-import { Roles } from '../../common/decorators/roles.decorator';
-import { CurrentUser } from '../../common/decorators/current-user.decorator';
-import { RoleType } from '@prisma/client';
+import { EnquiriesService } from './enquiries.service.js';
+import { CreateEnquiryDto, UpdateEnquiryStatusDto, AddEnquiryNoteDto } from './dto/enquiry.dto.js';
+import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard.js';
+import { RolesGuard } from '../../common/guards/roles.guard.js';
+import { Roles } from '../../common/decorators/roles.decorator.js';
+import { CurrentUser } from '../../common/decorators/current-user.decorator.js';
+import { RoleType } from '../../generated/prisma/client.js';
 
 @ApiTags('Contact & Enquiries')
 @Controller('v1/enquiries')

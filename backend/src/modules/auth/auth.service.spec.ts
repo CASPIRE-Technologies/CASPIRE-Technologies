@@ -1,7 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtService } from '@nestjs/jwt';
-import { AuthService } from './auth.service';
-import { PrismaService } from '../../prisma/prisma.service';
+import { expect, jest, it, beforeEach, describe } from '@jest/globals';
+import { AuthService } from './auth.service.js';
+import { PrismaService } from '../../prisma/prisma.service.js';
 import { UnauthorizedException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
@@ -9,7 +10,7 @@ describe('AuthService', () => {
   let service: AuthService;
   let prisma: PrismaService;
 
-  const mockPrismaService = {
+  const mockPrismaService: any = {
     user: {
       findUnique: jest.fn(),
     },
@@ -24,7 +25,7 @@ describe('AuthService', () => {
     },
   };
 
-  const mockJwtService = {
+  const mockJwtService: any = {
     sign: jest.fn().mockReturnValue('mocked-token'),
   };
 
@@ -61,7 +62,7 @@ describe('AuthService', () => {
       passwordHash: hashedPassword,
       status: 'ACTIVE',
       role: 'ADMIN',
-    });
+    } as any);
 
     await expect(
       service.login({ email: 'admin@apexsoftware.lk', password: 'wrongPassword' }),

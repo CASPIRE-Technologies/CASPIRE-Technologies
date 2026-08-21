@@ -1,52 +1,21 @@
-import { NestFactory } from '@nestjs/core';
-import { ValidationPipe, Logger } from '@nestjs/common';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import helmet from 'helmet';
-import { AppModule } from './app.module';
+import "reflect-metadata";
+import "dotenv/config";
+
+import { NestFactory } from "@nestjs/core";
+
+import { AppModule } from "./app.module.js";
 
 async function bootstrap() {
-  const logger = new Logger('Bootstrap');
   const app = await NestFactory.create(AppModule);
-
-  // Security Headers
-  app.use(helmet());
-
-  // CORS Configuration
-  app.enableCors({
-    origin: process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : '*',
-    credentials: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    allowedHeaders: 'Content-Type, Accept, Authorization, X-Request-ID',
-  });
-
-  // Global Prefix
-  app.setGlobalPrefix('api');
-
-  // Input Validation & DTO Transformation
-  app.useGlobalPipes(
-    new ValidationPipe({
-      whitelist: true,
-      transform: true,
-      forbidNonWhitelisted: true,
-      transformOptions: {
-        enableImplicitConversion: true,
-      },
-    }),
-  );
-
-  // Swagger Documentation Setup
-  const config = new DocumentBuilder()
-    .setTitle('Apex Software Engineering REST API')
-    .setDescription('Enterprise RESTful API documentation for Sri Lankan IT services & software engineering partner.')
-    .setVersion('1.0.0')
-    .addBearerAuth()
-    .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api/docs', app, document);
-
-  const port = process.env.PORT || 3000;
-  await app.listen(port);
-  logger.log(`🚀 REST API Server running on port http://localhost:${port}/api/v1/health`);
-  logger.log(`📚 Swagger documentation available at http://localhost:${port}/api/docs`);
+  const rawPort = (process.env.PORT ?? "").trim();
+  const parsedPort = rawPort.length > 0 ? Number(rawPort) : Number.NaN;
+  const port =
+    Number.isFinite(parsedPort) && parsedPort >= 0 && parsedPort <= 65535 ? parsedPort : 3000;
+  await app.listen(port, "0.0.0.0");
+  console.log(`Server running at http://localhost:${port}`);
 }
-bootstrap();
+
+bootstrap().catch((error) => {
+  console.error("Failed to start server", error);
+  process.exit(1);
+});

@@ -1,17 +1,11 @@
-import { Controller, Get } from '@nestjs/common';
-import { ApiTags, ApiOperation } from '@nestjs/swagger';
+import { Controller, Get } from "@nestjs/common";
 
-@ApiTags('Health')
-@Controller('v1')
+@Controller()
 export class AppController {
-  @Get('health')
-  @ApiOperation({ summary: 'API Health Check' })
-  healthCheck() {
+  @Get()
+  getRoot() {
     return {
-      status: 'UP',
-      timestamp: new Date().toISOString(),
-      service: 'Apex Software Engineering REST API',
-      version: '1.0.0',
+      message: "hello from create-prisma + nest",
     };
   }
 }

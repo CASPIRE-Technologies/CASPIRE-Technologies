@@ -1,18 +1,19 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { EnquiriesService } from './enquiries.service';
-import { PrismaService } from '../../prisma/prisma.service';
+import { EnquiriesService } from './enquiries.service.js';
+import { PrismaService } from '../../prisma/prisma.service.js';
+import { expect, jest, it, beforeEach, describe } from '@jest/globals';
 
 describe('EnquiriesService', () => {
   let service: EnquiriesService;
 
   const mockPrismaService = {
     enquiry: {
-      create: jest.fn().mockImplementation((args) => Promise.resolve({ id: 'enq-123', ...args.data })),
+      create: jest.fn().mockImplementation((args: any) => Promise.resolve({ id: 'enq-123', ...args.data })),
       findMany: jest.fn().mockResolvedValue([]),
       findUnique: jest.fn(),
     },
     auditLog: {
-      create: jest.fn().mockResolvedValue({ id: 'log-1' }),
+      create: jest.fn<() => Promise<{ id: string }>>(async () => ({ id: 'log-1' })),
     },
   };
 

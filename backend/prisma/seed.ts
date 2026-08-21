@@ -1,4 +1,5 @@
-import { PrismaClient, RoleType, EnquiryStatus } from '@prisma/client';
+
+import { PrismaClient, RoleType } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -8,8 +9,8 @@ async function main() {
 
   // 1. Seed Site Settings
   const settings = [
-    { key: 'company_name', value: 'Apex Software Engineering (Pvt) Ltd', description: 'Official registered company name' },
-    { key: 'company_email', value: 'contact@apexsoftware.lk', description: 'Primary contact email' },
+    { key: 'company_name', value: 'Caspire Technologies (Pvt) Ltd', description: 'Official registered company name' },
+    { key: 'company_email', value: 'caspiretechnologies@gmail.com', description: 'Primary contact email' },
     { key: 'company_phone', value: '+94 11 234 5678', description: 'Primary office telephone' },
     { key: 'company_whatsapp', value: '+94 77 123 4567', description: 'WhatsApp business contact' },
     { key: 'company_address', value: 'Level 12, West Tower, World Trade Center, Colombo 01, Sri Lanka', description: 'Headquarters physical address' },

@@ -1,8 +1,8 @@
 import { Injectable, BadRequestException, NotFoundException, Logger } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import { PrismaService } from '../../prisma/prisma.service';
-import { CreateEnquiryDto, UpdateEnquiryStatusDto, AddEnquiryNoteDto } from './dto/enquiry.dto';
-import { EnquiryStatus } from '@prisma/client';
+import { PrismaService } from '../../prisma/prisma.service.js';
+import { CreateEnquiryDto, UpdateEnquiryStatusDto, AddEnquiryNoteDto } from './dto/enquiry.dto.js';
+import { EnquiryStatus } from '../../generated/prisma/client.js';
 
 @Injectable()
 export class EnquiriesService {
