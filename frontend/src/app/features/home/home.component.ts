@@ -13,7 +13,7 @@ import { ApiService } from '../../core/services/api.service';
     <section class="hero-section" aria-label="Hero Introduction">
       <!-- Background Video -->
       <video class="hero-video" autoplay [muted]="true" loop playsinline>
-        <source src="./../../../assets/videos/Hero_video_for_tech_company_202608201455.mp4" type="video/mp4" >
+        <source src="./../../../assets/videos/mixkit-computer-code-in-the-screen-9757-hd-ready.mp4" type="video/mp4" >
         Your browser does not support the video tag.
       </video>
       
