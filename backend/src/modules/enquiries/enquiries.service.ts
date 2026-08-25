@@ -138,6 +138,25 @@ export class EnquiriesService {
     return note;
   }
 
+  async deleteAdmin(id: string, userId: string) {
+    const enquiry = await this.prisma.enquiry.findUnique({ where: { id } });
+    if (!enquiry) {
+      throw new NotFoundException(`Enquiry #${id} not found`);
+    }
+
+    await this.prisma.auditLog.create({
+      data: {
+        userId,
+        action: 'ENQUIRY_DELETED',
+        entityType: 'Enquiry',
+        entityId: id,
+        details: `Enquiry submitted by ${enquiry.name} (${enquiry.company}) was deleted`,
+      },
+    });
+
+    return this.prisma.enquiry.delete({ where: { id } });
+  }
+
   private async sendNotificationEmail(enquiry: any) {
     const smtpHost = process.env.SMTP_HOST;
     const smtpUser = process.env.SMTP_USER;

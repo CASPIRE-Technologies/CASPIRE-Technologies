@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Put, Param, Body, Query, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Param, Body, Query, UseGuards, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiQuery, ApiBearerAuth } from '@nestjs/swagger';
 import { EnquiriesService } from './enquiries.service.js';
 import { CreateEnquiryDto, UpdateEnquiryStatusDto, AddEnquiryNoteDto } from './dto/enquiry.dto.js';
@@ -67,5 +67,17 @@ export class EnquiriesController {
     @CurrentUser('id') userId: string,
   ) {
     return this.enquiriesService.addNote(id, dto, userId);
+  }
+
+  @Delete('admin/:id')
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles(RoleType.ADMIN, RoleType.SUPERADMIN)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Delete enquiry (Admin)' })
+  async deleteAdminEnquiry(
+    @Param('id') id: string,
+    @CurrentUser('id') userId: string,
+  ) {
+    return this.enquiriesService.deleteAdmin(id, userId);
   }
 }
