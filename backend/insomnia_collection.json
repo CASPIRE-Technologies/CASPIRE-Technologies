@@ -1,0 +1,197 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2026-08-26T00:00:00.000Z",
+  "__export_source": "insomnia.export",
+  "resources": [
+    {
+      "_id": "wrk_1",
+      "_type": "workspace",
+      "name": "Caspire Backend API",
+      "description": "Insomnia collection for Caspire backend (mock data)",
+      "scope": "collection"
+    },
+    {
+      "_id": "env_1",
+      "_type": "environment",
+      "parentId": "wrk_1",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:3000"
+      }
+    },
+    {
+      "_id": "req_register",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "POST /v1/auth/register",
+      "method": "POST",
+      "url": "{{ base_url }}/v1/auth/register",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Test User\",\n  \"email\": \"test.user@example.com\",\n  \"password\": \"Password123!\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "req_login",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "POST /v1/auth/login",
+      "method": "POST",
+      "url": "{{ base_url }}/v1/auth/login",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"email\": \"test.user@example.com\",\n  \"password\": \"Password123!\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "req_refresh",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "POST /v1/auth/refresh",
+      "method": "POST",
+      "url": "{{ base_url }}/v1/auth/refresh",
+      "headers": [
+        { "name": "Cookie", "value": "refreshToken={{ refresh_token }}" }
+      ]
+    },
+    {
+      "_id": "req_logout",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "POST /v1/auth/logout",
+      "method": "POST",
+      "url": "{{ base_url }}/v1/auth/logout",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ access_token }}" }
+      ]
+    },
+    {
+      "_id": "req_me",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "GET /v1/auth/me",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/auth/me",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ access_token }}" }
+      ]
+    },
+    {
+      "_id": "req_create_enquiry",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "POST /v1/enquiries",
+      "method": "POST",
+      "url": "{{ base_url }}/v1/enquiries",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Kamal Silva\",\n  \"company\": \"Demo Construction Ltd\",\n  \"email\": \"kamal@example.lk\",\n  \"telephone\": \"+94 77 123 4567\",\n  \"country\": \"Sri Lanka\",\n  \"serviceOfInterest\": \"SME Workflow Digitization\",\n  \"budgetRange\": \"$5,000 - $10,000\",\n  \"preferredContactMethod\": \"Email\",\n  \"description\": \"We need a material requisition and approval workflow.\",\n  \"consent\": true\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ]
+    },
+    {
+      "_id": "req_get_blog",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "GET /v1/blog",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/blog?search=digital&tag=SME",
+      "headers": []
+    },
+    {
+      "_id": "req_get_post",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "GET /v1/blog/:slug",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/blog/modernizing-legacy-systems-sri-lankan-smes",
+      "headers": []
+    },
+    {
+      "_id": "req_create_blog",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "POST /v1/blog (Admin)",
+      "method": "POST",
+      "url": "{{ base_url }}/v1/blog",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ access_token }}" },
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"slug\": \"new-article-sample\",\n  \"title\": \"New Article (Sample)\",\n  \"excerpt\": \"Short summary\",\n  \"content\": \"This is sample content for testing.\",\n  \"categoryId\": 1,\n  \"tags\": [\"Tech\", \"Announcement\"],\n  \"authorName\": \"Admin\"\n}"
+      }
+    },
+    {
+      "_id": "req_get_industries",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "GET /v1/industries",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/industries",
+      "headers": []
+    },
+    {
+      "_id": "req_create_industry",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "POST /v1/industries (Admin)",
+      "method": "POST",
+      "url": "{{ base_url }}/v1/industries",
+      "headers": [
+        { "name": "Authorization", "value": "Bearer {{ access_token }}" },
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"slug\": \"new-industry\",\n  \"title\": \"New Industry Sample\",\n  \"shortDesc\": \"Short description here\",\n  \"fullDesc\": \"Long description for the industry.\"\n}"
+      }
+    },
+    {
+      "_id": "req_get_portfolio",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "GET /v1/portfolio",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/portfolio",
+      "headers": []
+    },
+    {
+      "_id": "req_get_services",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "GET /v1/services",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/services",
+      "headers": []
+    },
+    {
+      "_id": "req_get_settings",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "GET /v1/settings",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/settings",
+      "headers": []
+    },
+    {
+      "_id": "req_get_team",
+      "_type": "request",
+      "parentId": "wrk_1",
+      "name": "GET /v1/team",
+      "method": "GET",
+      "url": "{{ base_url }}/v1/team",
+      "headers": []
+    }
+  ]
+}

@@ -1,130 +1,140 @@
-import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
+// auth.service.ts
+import { Injectable, UnauthorizedException, ConflictException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 import { PrismaService } from '../../prisma/prisma.service.js';
-import { LoginDto, RefreshTokenDto } from './dto/auth.dto.js';
+import { RegisterDto, LoginDto } from './dto/auth.dto.js';
+import JWT, { type JwtPayload, Role } from '../../common/jwt/jwt.js';
+import type { RoleType } from '../../generated/prisma/enums.js';
+
+const REFRESH_TTL_MS = 7 * 24 * 60 * 60 * 1000; // 7 days
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private prisma: PrismaService,
-    private jwtService: JwtService,
-  ) {}
+  constructor(private readonly prisma: PrismaService) {
+    
+    // Diagnostic: confirm service instantiation and availability of Prisma
+    // eslint-disable-next-line no-console
+    console.log('AuthService constructed — prisma injected?', !!this.prisma);
+  }
 
-  async login(loginDto: LoginDto, ipAddress?: string, userAgent?: string) {
-    const user = await this.prisma.user.findUnique({
-      where: { email: loginDto.email.toLowerCase() },
+  async register(dto: RegisterDto, ipAddress?: string, userAgent?: string) {
+    const existing = await this.prisma.user.findUnique({ where: { email: dto.email } });
+    if (existing) {
+      throw new ConflictException('Email is already in use');
+    }
+
+    const hashedPassword = await bcrypt.hash(dto.password, 10);
+    const user = await this.prisma.user.create({
+      data: {
+        email: dto.email,
+        passwordHash: hashedPassword,
+        name: dto.full_name,
+        role: Role.USER as RoleType, // always default — never trust a client-supplied role
+      },
     });
 
+    return this.issueTokens(user, ipAddress, userAgent);
+  }
+
+  async login(dto: LoginDto, ipAddress?: string, userAgent?: string) {
+    const user = await this.prisma.user.findUnique({ where: { email: dto.email } });
     if (!user) {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    const isPasswordValid = await bcrypt.compare(loginDto.password, user.passwordHash);
-    if (!isPasswordValid) {
+    const passwordValid = await bcrypt.compare(dto.password, user.passwordHash);
+    if (!passwordValid) {
       throw new UnauthorizedException('Invalid email or password');
     }
 
-    if (user.status !== 'ACTIVE') {
-      throw new UnauthorizedException('Account is inactive. Contact system administrator.');
-    }
-
-    const tokens = await this.generateTokens(user.id, user.email, user.role);
-
-    // Record audit log
-    await this.prisma.auditLog.create({
-      data: {
-        userId: user.id,
-        action: 'USER_LOGIN',
-        entityType: 'User',
-        entityId: user.id,
-        details: `Successful login for ${user.email}`,
-        ipAddress,
-        userAgent,
-      },
-    });
-
-    return {
-      user: {
-        id: user.id,
-        email: user.email,
-        name: user.name,
-        role: user.role,
-      },
-      ...tokens,
-    };
+    return this.issueTokens(user, ipAddress, userAgent);
   }
 
-  async refreshToken(dto: RefreshTokenDto) {
-    const storedToken = await this.prisma.refreshToken.findUnique({
-      where: { token: dto.refreshToken },
-      include: { user: true },
-    });
+  async refreshToken(rawToken: string | undefined) {
+    if (!rawToken) {
+      throw new UnauthorizedException('No refresh token provided');
+    }
 
-    if (!storedToken || storedToken.revoked || new Date() > storedToken.expiresAt) {
+    const payload = JWT.verifyRefresh<JwtPayload>(rawToken);
+    if (!payload) {
       throw new UnauthorizedException('Invalid or expired refresh token');
     }
 
-    // Revoke old refresh token (Token rotation)
+    const tokenHash = this.hashToken(rawToken);
+    const stored = await this.prisma.refreshToken.findFirst({ where: { token: tokenHash } });
+
+    if (!stored || stored.revoked || stored.expiresAt < new Date()) {
+      throw new UnauthorizedException('Refresh token is no longer valid');
+    }
+
+    // rotate: revoke the used token, issue a fresh pair
     await this.prisma.refreshToken.update({
-      where: { id: storedToken.id },
+      where: { token: tokenHash },
       data: { revoked: true },
     });
 
-    // Issue new token pair
-    return this.generateTokens(storedToken.user.id, storedToken.user.email, storedToken.user.role);
+    const newPayload: JwtPayload = { sub: payload.sub, email: payload.email, role: payload.role };
+    const accessToken = JWT.signAccess(newPayload);
+    const refreshToken = JWT.signRefresh(newPayload);
+
+    await this.prisma.refreshToken.create({
+      data: {
+        token: this.hashToken(refreshToken),
+        userId: payload.sub,
+        expiresAt: new Date(Date.now() + REFRESH_TTL_MS),
+      },
+    });
+
+    return { accessToken, refreshToken };
   }
 
   async logout(userId: string, refreshToken?: string) {
     if (refreshToken) {
+      // revoke just this session
+      const tokenHash = this.hashToken(refreshToken);
       await this.prisma.refreshToken.updateMany({
-        where: { userId, token: refreshToken },
+        where: { tokenHash, userId },
+        data: { revoked: true },
+      });
+    } else {
+      // no token provided → revoke every session for this user
+      await this.prisma.refreshToken.updateMany({
+        where: { userId, revoked: false },
         data: { revoked: true },
       });
     }
 
-    await this.prisma.auditLog.create({
-      data: {
-        userId,
-        action: 'USER_LOGOUT',
-        entityType: 'User',
-        entityId: userId,
-        details: `User logged out`,
-      },
-    });
-
     return { message: 'Logged out successfully' };
   }
 
-  private async generateTokens(userId: string, email: string, role: string) {
-    const payload = { sub: userId, email, role };
+  private async issueTokens(
+    user: { id: string; email: string; role: string },
+    ipAddress?: string,
+    userAgent?: string,
+  ) {
+    const payload: JwtPayload = { sub: user.id, email: user.email, role: user.role as Role };
+    const accessToken = JWT.signAccess(payload);
+    const refreshToken = JWT.signRefresh(payload);
 
-    const accessToken = this.jwtService.sign(payload, {
-      secret: process.env.JWT_SECRET || 'apex-secret-key-super-secure-change-in-prod',
-      expiresIn: '15m',
-    });
-
-    const refreshToken = this.jwtService.sign(payload, {
-      secret: process.env.JWT_REFRESH_SECRET || 'apex-refresh-secret-key-change-in-prod',
-      expiresIn: '7d',
-    });
-
-    const expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 7);
-
-    // Save refresh token to DB
     await this.prisma.refreshToken.create({
       data: {
-        token: refreshToken,
-        userId,
-        expiresAt,
+        token: this.hashToken(refreshToken),
+        userId: user.id,
+        ipAddress,
+        userAgent,
+        expiresAt: new Date(Date.now() + REFRESH_TTL_MS),
       },
     });
 
     return {
       accessToken,
       refreshToken,
-      expiresIn: 900, // 15 minutes in seconds
+      user: { id: user.id, email: user.email, role: user.role },
     };
+  }
+
+  private hashToken(token: string): string {
+    return crypto.createHash('sha256').update(token).digest('hex');
   }
 }

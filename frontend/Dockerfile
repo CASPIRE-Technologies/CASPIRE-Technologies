@@ -1,20 +1,11 @@
-FROM node:20-alpine AS builder
-
+FROM node:18-alpine AS builder
 WORKDIR /app
-
-COPY package*.json tsconfig*.json angular.json ./
-RUN npm ci
-
-COPY src ./src
-RUN npm run build
-
-FROM node:20-alpine AS runner
-
-WORKDIR /app
-
 COPY package*.json ./
-COPY --from=builder /app/dist/company-website-frontend ./dist/company-website-frontend
+RUN npm ci --legacy-peer-deps
+COPY . .
+RUN npm run build --configuration production
 
-EXPOSE 4000
-
-CMD ["node", "dist/company-website-frontend/server/server.mjs"]
+FROM nginx:alpine
+COPY --from=builder /app/dist/company-website-frontend /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

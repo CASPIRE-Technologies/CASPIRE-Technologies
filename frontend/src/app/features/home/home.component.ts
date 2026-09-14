@@ -14,7 +14,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     <section class="hero-section" aria-label="Hero Introduction">
       <!-- Background Video -->
       <video class="hero-video" autoplay [muted]="true" loop playsinline>
-        <source src="./../../../assets/videos/mixkit-computer-code-in-the-screen-9757-hd-ready.mp4" type="video/mp4" >
+        <source src="./../../../assets/videos/Hero_video_for_tech_company_202608201455.mp4" type="video/mp4" >
         Your browser does not support the video tag.
       </video>
 
@@ -418,14 +418,14 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
       justify-content: center;
       border-radius: var(--radius-md);
       background: var(--color-bg-surface-elevated, #f0fdfa);
-      color: var(--color-teal-dark);
+      color: var(--color-navy-dark);
       font-size: 1.625rem;
       margin-bottom: 1.25rem;
       transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.35s ease;
     }
     .problem-card:hover .problem-icon-wrap {
       transform: scale(1.1) rotate(-4deg);
-      background: var(--color-teal-accent);
+      background: var(--color-navy-dark);
       color: #ffffff;
     }
     .solution-tag {
@@ -454,7 +454,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     .service-card:hover {
       transform: translateY(-6px);
       box-shadow: 0 16px 32px rgba(15, 23, 42, 0.1);
-      border-color: var(--color-navy-dark);
+      border-color: var(--color-teal-accent);
     }
     .service-icon-box {
       width: 56px;
@@ -518,7 +518,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     /* Process Timeline */
     .process-timeline {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 1rem;
     }
     .process-step {

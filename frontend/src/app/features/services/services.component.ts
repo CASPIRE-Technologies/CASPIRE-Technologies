@@ -13,46 +13,47 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     <!-- Page Header -->
     <section class="page-header">
       <div class="container">
-        <div class="badge badge-teal mb-3">
-          <span class="pulse-dot"></span> Primary Services
-        </div>
-        <h1>Software Engineering & Services Catalog</h1>
+        <p class="eyebrow">Primary services</p>
+        <h1>Software engineering & services catalog</h1>
         <p class="header-lead">
           Comprehensive digital capability spanning custom application development, quality engineering, backend APIs, SEO, and organic social media marketing.
         </p>
       </div>
     </section>
 
-    <!-- Services Grid -->
-    <section class="section">
+    <!-- Services Index -->
+    <section class="section services-index">
       <div class="container">
-        <div class="services-list-grid">
-          <div
-            *ngFor="let s of services(); let i = index"
-            class="card service-card-detailed reveal"
-            [style.transition-delay.ms]="i * 80"
-          >
-            <div class="card-icon-box">
-              <span nz-icon [nzType]="getServiceIcon(s.icon)" nzTheme="outline"></span>
-            </div>
-            <div class="card-body">
-              <h2>{{ s.title }}</h2>
-              <p class="short-desc">{{ s.shortDesc }}</p>
+        <div class="index-meta reveal">
+          <span>{{ services().length }} services</span>
+        </div>
 
-              <div class="problem-preview">
-                <span nz-icon nzType="alert" nzTheme="outline" class="problem-icon"></span>
-                <div>
-                  <strong>Target Challenge</strong>
-                  <p>{{ s.customerProblem }}</p>
-                </div>
-              </div>
+        <div
+          *ngFor="let s of services(); let i = index"
+          class="service-row reveal"
+          [class.reverse]="i % 2 === 1"
+        >
+          <div class="service-row-media" *ngIf="s.image">
+            <img [src]="s.image" [alt]="s.title" loading="lazy" />
+          </div>
+          <div class="service-row-media service-row-media--empty" *ngIf="!s.image">
+            <span nz-icon [nzType]="getServiceIcon(s.icon)" nzTheme="outline"></span>
+          </div>
 
-              <div class="card-actions mt-4">
-                <a [routerLink]="['/services', s.slug]" class="service-link">
-                  Explore Service Details →
-                </a>
-              </div>
+          <div class="service-row-content">
+            <span class="row-index">{{ i + 1 < 10 ? '0' + (i + 1) : (i + 1) }}</span>
+            <h2>{{ s.title }}</h2>
+            <p class="short-desc">{{ s.shortDesc }}</p>
+
+            <div class="problem-preview">
+              <strong>Target challenge</strong>
+              <p>{{ s.customerProblem }}</p>
             </div>
+
+            <a [routerLink]="['/services', s.slug]" class="service-link">
+              <span>Explore service details</span>
+              <span class="link-arrow">→</span>
+            </a>
           </div>
         </div>
       </div>
@@ -61,14 +62,15 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     <!-- Consultation Banner -->
     <section class="section section-alt text-center">
       <div class="container reveal">
-        <span class="badge badge-navy mb-2">Not Sure Where to Start?</span>
+        <p class="eyebrow eyebrow--center">Not sure where to start?</p>
         <h2>Unsure which service matches your exact requirement?</h2>
         <p class="section-lead">Schedule a discovery call with our technical architect to assess your project requirements.</p>
-        <a routerLink="/contact" class="btn btn-primary mt-4">Request a Free Technical Assessment →</a>
+        <a routerLink="/contact" class="btn btn-primary mt-4">Request a free technical assessment →</a>
       </div>
     </section>
   `,
   styles: [`
+    /* ===== Page header ===== */
     .page-header {
       background: linear-gradient(135deg, var(--color-navy-dark), var(--color-navy));
       color: #ffffff;
@@ -79,138 +81,238 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
       h1 {
         color: #ffffff;
         margin-bottom: 0.75rem;
+        max-width: 20ch;
         animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 100ms both;
       }
       .header-lead {
         color: #cbd5e1;
         font-size: 1.25rem;
-        max-width: 700px;
+        max-width: 640px;
         animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 220ms both;
       }
-      .badge {
-        animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-      }
     }
+
+    .eyebrow {
+      color: var(--color-teal-accent);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin: 0 0 0.85rem;
+      animation: fadeInUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+    .eyebrow--center { text-align: center; }
 
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      background-color: var(--color-teal-accent);
-      border-radius: 50%;
-      display: inline-block;
-      animation: pulse 2s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.55; transform: scale(1.35); }
+    /* ===== Services index (alternating rows) ===== */
+    .services-index {
+      padding-top: 1rem;
     }
 
-    .services-list-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 2rem;
-    }
-
-    .service-card-detailed {
+    .index-meta {
       display: flex;
-      flex-direction: column;
-      height: 100%;
-      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
-    }
-    .service-card-detailed:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 32px rgba(15, 23, 42, 0.1);
-      border-color: var(--color-teal-accent);
+      justify-content: flex-end;
+      color: var(--color-charcoal-muted);
+      font-size: 0.85rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+      margin-bottom: 0.5rem;
     }
 
-    .card-icon-box {
-      width: 56px;
-      height: 56px;
+    .service-row {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: 3.5rem;
+      align-items: center;
+      padding: 3.75rem 0;
+      border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    }
+    .service-row.reverse {
+      grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    }
+    .service-row.reverse .service-row-media { order: 2; }
+    .service-row.reverse .service-row-content { order: 1; }
+
+    /* ===== Scroll reveal: media slides in from its side ===== */
+    .service-row-media {
+      position: relative;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      border-radius: var(--radius-md);
+      background: var(--color-bg-surface-elevated, #f1f5f9);
+      opacity: 0;
+      transform: translateX(-40px) scale(0.97);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .service-row.reverse .service-row-media {
+      transform: translateX(40px) scale(0.97);
+    }
+    .service-row.revealed .service-row-media {
+      opacity: 1;
+      transform: none;
+    }
+
+    .service-row-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transform: scale(1);
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .service-row:hover .service-row-media img {
+      transform: scale(1.05);
+    }
+    .service-row-media--empty {
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: var(--radius-md);
-      background: var(--color-bg-surface-elevated, #f8fafc);
+      font-size: 3rem;
       color: var(--color-navy-dark);
-      font-size: 1.625rem;
-      margin-bottom: 1.25rem;
-      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.35s ease, color 0.35s ease;
-    }
-    .service-card-detailed:hover .card-icon-box {
-      transform: scale(1.1) rotate(4deg);
-      background: var(--color-navy-dark);
-      color: #ffffff;
     }
 
-    .short-desc { color: var(--color-charcoal-muted); margin-bottom: 1.25rem; }
+    /* ===== Scroll reveal: content cascades in, one piece at a time ===== */
+    .service-row-content > * {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .service-row.revealed .service-row-content > * {
+      opacity: 1;
+      transform: none;
+    }
+    .service-row-content > *:nth-child(1) { transition-delay: 0.05s; }
+    .service-row-content > *:nth-child(2) { transition-delay: 0.13s; }
+    .service-row-content > *:nth-child(3) { transition-delay: 0.21s; }
+    .service-row-content > *:nth-child(4) { transition-delay: 0.29s; }
+    .service-row-content > *:nth-child(5) { transition-delay: 0.37s; }
+
+    .row-index {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--color-teal-accent);
+      margin-bottom: 0.75rem;
+    }
+
+    .service-row-content h2 {
+      font-size: 1.9rem;
+      color: var(--color-navy-dark);
+      margin-bottom: 0.85rem;
+    }
+
+    .short-desc {
+      color: var(--color-charcoal-muted);
+      max-width: 46ch;
+      margin-bottom: 1.5rem;
+    }
 
     .problem-preview {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.625rem;
-      background-color: var(--color-bg-surface-elevated);
-      padding: 0.875rem 1rem;
-      border-radius: var(--radius-md);
-      font-size: 0.875rem;
-      color: var(--color-charcoal);
-      border-left: 3px solid var(--color-teal-dark);
-      margin-top: auto;
+      border-left: 2px solid var(--color-teal-dark);
+      padding-left: 1rem;
+      max-width: 46ch;
+      margin-bottom: 1.75rem;
 
-      strong { display: block; margin-bottom: 0.15rem; }
-      p { margin: 0; }
-    }
-    .problem-icon {
-      color: var(--color-teal-dark);
-      font-size: 1rem;
-      margin-top: 0.15rem;
-      flex-shrink: 0;
+      strong {
+        display: block;
+        font-size: 0.8rem;
+        color: var(--color-navy-dark);
+        margin-bottom: 0.25rem;
+      }
+      p {
+        margin: 0;
+        font-size: 0.925rem;
+        color: var(--color-charcoal);
+      }
     }
 
     .service-link {
-      display: inline-block;
-      margin-top: 1.25rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
       font-weight: 700;
-      color: var(--color-teal-dark);
+      color: var(--color-navy-dark);
+      position: relative;
+    }
+    .service-link::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -4px;
+      height: 1px;
+      background: var(--color-teal-dark);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s ease;
+    }
+    .service-link:hover::after {
+      transform: scaleX(1);
+    }
+    .link-arrow {
+      transition: transform 0.3s ease;
+    }
+    .service-link:hover .link-arrow {
+      transform: translateX(4px);
     }
 
+    /* ===== Shared utility ===== */
     .text-center { text-align: center; }
-    .mb-2 { margin-bottom: 0.5rem; }
-    .mb-3 { margin-bottom: 1rem; }
     .mt-4 { margin-top: 1rem; }
 
-    /* Scroll reveal */
-    .reveal {
+    /* Generic scroll reveal (header meta row, banner) */
+    .index-meta.reveal,
+    .section-alt .reveal {
       opacity: 0;
       transform: translateY(24px);
       transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .reveal.revealed {
+    .index-meta.revealed,
+    .section-alt .reveal.revealed {
       opacity: 1;
       transform: translateY(0);
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; transition: none; }
-      .page-header h1, .page-header .header-lead, .page-header .badge, .pulse-dot { animation: none; }
+      .page-header h1, .page-header .header-lead, .eyebrow { animation: none; }
+      .service-row-media,
+      .service-row-content > *,
+      .index-meta.reveal,
+      .section-alt .reveal {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+      .service-row-media img { transition: none; }
     }
 
     /* ===== Responsive ===== */
-    @media (max-width: 1024px) {
-      .services-list-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+    @media (max-width: 900px) {
+      .service-row,
+      .service-row.reverse {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 2.5rem 0;
+      }
+      .service-row.reverse .service-row-media,
+      .service-row.reverse .service-row-content {
+        order: initial;
+      }
+      .service-row-media,
+      .service-row.reverse .service-row-media {
+        transform: translateY(24px);
+      }
+      .service-row.revealed .service-row-media {
+        transform: none;
+      }
+      .service-row-media { aspect-ratio: 16 / 10; }
+      .service-row-content h2 { font-size: 1.5rem; }
     }
 
     @media (max-width: 767px) {
       .page-header { padding: 3rem 0; }
-    }
-
-    @media (max-width: 480px) {
-      .services-list-grid { grid-template-columns: 1fr; }
-      .card-icon-box { width: 48px; height: 48px; font-size: 1.375rem; }
     }
   `]
 })
@@ -288,18 +390,18 @@ export class ServicesComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private marketingServices() {
     return [
-      { slug: 'seo', title: 'SEO', icon: 'search', shortDesc: 'Technical, on-page, and local SEO improvements that help customers find your business through organic search.', customerProblem: 'A polished website still loses leads when it is not structured, written, and indexed for search visibility.', displayOrder: 6 },
-      { slug: 'social-media-marketing', title: 'Social Media Marketing', icon: 'social', shortDesc: 'Organic social media planning, content calendars, creative posts, and profile management without paid boosting.', customerProblem: 'Inconsistent posting and unclear messaging make it difficult to build trust and stay visible online.', displayOrder: 7 },
+      { slug: 'seo', title: 'SEO', icon: 'search', shortDesc: 'Technical, on-page, and local SEO improvements that help customers find your business through organic search.', customerProblem: 'A polished website still loses leads when it is not structured, written, and indexed for search visibility.', displayOrder: 6, image: '../../../assets/services/seo.png' },
+      { slug: 'social-media-marketing', title: 'Social Media Marketing', icon: 'social', shortDesc: 'Organic social media planning, content calendars, creative posts, and profile management without paid boosting.', customerProblem: 'Inconsistent posting and unclear messaging make it difficult to build trust and stay visible online.', displayOrder: 7, image: '../../../assets/services/social-media.png' },
     ];
   }
 
   private getFallbackServices() {
     return [
-      { slug: 'custom-web-applications', title: 'Custom Web Applications', icon: 'code', shortDesc: 'Tailor-made web applications designed for high performance, enterprise security, and long-term scalability.', customerProblem: 'Off-the-shelf software forces businesses into rigid workflows.' },
-      { slug: 'sme-digital-transformation', title: 'SME Workflow Digitization', icon: 'cpu', shortDesc: 'Automate manual paper processes, eliminate spreadsheet errors, and digitize core business operations.', customerProblem: 'Fragmented spreadsheets cause data errors and lost records.' },
-      { slug: 'backend-api-development', title: 'Backend & API Development', icon: 'server', shortDesc: 'Robust RESTful and GraphQL APIs, microservices architecture, and secure enterprise integration layers.', customerProblem: 'Legacy APIs crash under peak concurrency.' },
-      { slug: 'qa-and-test-automation', title: 'QA & Test Automation', icon: 'shield-check', shortDesc: 'Independent quality engineering, automated regression testing, performance profiling, and security testing.', customerProblem: 'Releasing unverified software damages brand trust.' },
-      { slug: 'cloud-deployment-devops', title: 'Cloud Deployment & DevOps', icon: 'cloud', shortDesc: 'Automated CI/CD pipelines, Docker containerization, cloud infrastructure management, and monitoring.', customerProblem: 'Manual server deployments are error-prone.' },
+      { slug: 'custom-web-applications', title: 'Custom Web Applications', icon: 'code', shortDesc: 'Tailor-made web applications designed for high performance, enterprise security, and long-term scalability.', customerProblem: 'Off-the-shelf software forces businesses into rigid workflows.', image: '../../../assets/services/custom-web-application.jpeg' },
+      { slug: 'sme-digital-transformation', title: 'SME Workflow Digitization', icon: 'cpu', shortDesc: 'Automate manual paper processes, eliminate spreadsheet errors, and digitize core business operations.', customerProblem: 'Fragmented spreadsheets cause data errors and lost records.', image: '../../../assets/services/sme.png' },
+      { slug: 'backend-api-development', title: 'Backend & API Development', icon: 'server', shortDesc: 'Robust RESTful and GraphQL APIs, microservices architecture, and secure enterprise integration layers.', customerProblem: 'Legacy APIs crash under peak concurrency.', image: '../../../assets/services/backend-services.png' },
+      { slug: 'qa-and-test-automation', title: 'QA & Test Automation', icon: 'shield-check', shortDesc: 'Independent quality engineering, automated regression testing, performance profiling, and security testing.', customerProblem: 'Releasing unverified software damages brand trust.', image: '../../../assets/services/qa.png' },
+      { slug: 'cloud-deployment-devops', title: 'Cloud Deployment & DevOps', icon: 'cloud', shortDesc: 'Automated CI/CD pipelines, Docker containerization, cloud infrastructure management, and monitoring.', customerProblem: 'Manual server deployments are error-prone.', image: '../../../assets/services/devops.png' },
       ...this.marketingServices(),
     ];
   }

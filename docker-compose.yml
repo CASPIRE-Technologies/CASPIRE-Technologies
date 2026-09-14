@@ -1,26 +1,6 @@
 version: '3.8'
 
 services:
-  # 1. MySQL 8 Database Service
-  mysql:
-    image: mysql:8.0
-    container_name: apex_mysql_db
-    restart: always
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: apex_company_db
-      MYSQL_USER: apex_user
-      MYSQL_PASSWORD: apex_password
-    ports:
-      - "3306:3306"
-    volumes:
-      - mysql_data:/var/lib/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
   # 2. NestJS REST API Backend Service
   backend:
     build:
@@ -30,15 +10,16 @@ services:
     restart: always
     ports:
       - "3000:3000"
+    env_file: .env
     environment:
       NODE_ENV: production
       PORT: 3000
-      DATABASE_URL: mysql://apex_user:apex_password@mysql:3306/apex_company_db
-      JWT_SECRET: apex-prod-secret-key-replace-in-env
-      JWT_REFRESH_SECRET: apex-prod-refresh-secret-replace-in-env
-      ADMIN_EMAIL: admin@apexsoftware.lk
-      ADMIN_PASSWORD: AdminPass123!
-      CORS_ORIGIN: "http://localhost:4000,http://localhost:4200"
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      ADMIN_EMAIL: ${ADMIN_EMAIL}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      CORS_ORIGIN: ${CORS_ORIGIN}
     depends_on:
       mysql:
         condition: service_healthy
@@ -48,6 +29,20 @@ services:
       timeout: 5s
       retries: 3
 
+  # One-shot Prisma migration service (run before backend)
+  migrate:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+      target: builder
+    image: caspire_backend_migrate
+    env_file: .env
+    depends_on:
+      mysql:
+        condition: service_healthy
+    command: ["npx", "prisma", "migrate", "deploy"]
+    restart: "no"
+
   # 3. Angular SSR Frontend Service
   frontend:
     build:
@@ -56,10 +51,10 @@ services:
     container_name: apex_frontend_web
     restart: always
     ports:
-      - "4000:4000"
+      - "4000:80"
     environment:
       NODE_ENV: production
-      PORT: 4000
+    env_file: .env
     depends_on:
       backend:
         condition: service_healthy
