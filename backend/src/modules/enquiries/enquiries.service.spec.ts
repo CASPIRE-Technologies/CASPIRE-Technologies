@@ -9,7 +9,7 @@ describe('EnquiriesService', () => {
   const mockPrismaService = {
     enquiry: {
       create: jest.fn().mockImplementation((args: any) => Promise.resolve({ id: 'enq-123', ...args.data })),
-      findMany: jest.fn().mockResolvedValue([]),
+      findMany: jest.fn().mockImplementation(() => Promise.resolve([])),
       findUnique: jest.fn(),
     },
     auditLog: {

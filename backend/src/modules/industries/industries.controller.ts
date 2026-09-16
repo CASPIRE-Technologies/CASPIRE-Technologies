@@ -52,9 +52,9 @@ export class IndustriesController {
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles(RoleType.SUPERADMIN)
+  @Roles(RoleType.ADMIN, RoleType.SUPERADMIN)
   @ApiBearerAuth()
-  @ApiOperation({ summary: 'Delete industry (Superadmin)' })
+  @ApiOperation({ summary: 'Delete industry (Admin)' })
   async deleteIndustry(@Param('id') id: string) {
     return this.industriesService.delete(id);
   }
