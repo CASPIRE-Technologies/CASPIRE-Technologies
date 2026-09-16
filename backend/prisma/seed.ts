@@ -1,6 +1,8 @@
 
-import { PrismaClient, RoleType } from '@prisma/client';
+
 import * as bcrypt from 'bcrypt';
+import { PrismaClient } from '@prisma/client';
+
 
 const prisma = new PrismaClient();
 
@@ -14,8 +16,8 @@ async function main() {
     { key: 'company_phone', value: '+94 11 234 5678', description: 'Primary office telephone' },
     { key: 'company_whatsapp', value: '+94 77 123 4567', description: 'WhatsApp business contact' },
     { key: 'company_address', value: 'Level 12, West Tower, World Trade Center, Colombo 01, Sri Lanka', description: 'Headquarters physical address' },
-    { key: 'company_linkedin', value: 'https://www.linkedin.com/company/apex-software-lk', description: 'Official LinkedIn page' },
-    { key: 'meta_default_title', value: 'Apex Software Engineering | Sri Lankan IT & Digital Transformation Partner', description: 'Default homepage title' },
+    { key: 'company_linkedin', value: 'https://www.linkedin.com/company/CASPIRE-software-lk', description: 'Official LinkedIn page' },
+    { key: 'meta_default_title', value: 'CASPIRE Software Engineering | Sri Lankan IT & Digital Transformation Partner', description: 'Default homepage title' },
     { key: 'meta_default_description', value: 'An end-to-end software engineering and digital transformation partner delivering secure, reliable and scalable business solutions for Sri Lankan enterprises and international clients.', description: 'Default homepage description' },
   ];
 
@@ -29,7 +31,7 @@ async function main() {
   console.log('✅ Site settings seeded');
 
   // 2. Seed Admin User
-  const adminEmail = process.env.ADMIN_EMAIL || 'admin@apexsoftware.lk';
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@CASPIREsoftware.lk';
   const adminPassword = process.env.ADMIN_PASSWORD || 'AdminPass123!';
   const passwordHash = await bcrypt.hash(adminPassword, 10);
 
@@ -344,7 +346,7 @@ By adopting a modular architecture, Sri Lankan SMEs achieve digital maturity wit
       `,
       categoryId: catSme.id,
       tags: JSON.stringify(['SME', 'Digital Transformation', 'Software Modernization', 'Sri Lanka']),
-      authorName: 'Apex Engineering Team',
+      authorName: 'CASPIRE Engineering Team',
       readTimeMinutes: 5,
     },
     {
@@ -366,7 +368,7 @@ Embedding independent QA into your software delivery lifecycle guarantees that r
       `,
       categoryId: catQa.id,
       tags: JSON.stringify(['Software Testing', 'QA as a Service', 'Test Automation', 'Quality Assurance']),
-      authorName: 'Apex QA Practice Lead',
+      authorName: 'CASPIRE QA Practice Lead',
       readTimeMinutes: 6,
     },
     {
@@ -385,7 +387,7 @@ Adhering to security-first architecture ensures full compliance while building l
       `,
       categoryId: catCloud.id,
       tags: JSON.stringify(['E-Commerce', 'Payment Gateways', 'Security', 'LankaPay', 'PayHere']),
-      authorName: 'Apex Security Team',
+      authorName: 'CASPIRE Security Team',
       readTimeMinutes: 4,
     },
   ];

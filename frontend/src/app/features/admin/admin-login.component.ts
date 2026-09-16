@@ -15,7 +15,7 @@ import { SeoService } from '../../core/services/seo.service';
         <div class="card login-card">
           <div class="logo-mark mx-auto mb-3">A</div>
           <h1 class="text-center">Admin Portal Login</h1>
-          <p class="text-center text-muted mb-4">Secure authentication for Apex System Administrators.</p>
+          <p class="text-center text-muted mb-4">Secure authentication for CASPIRE System Administrators.</p>
 
           <div *ngIf="loginError()" class="alert alert-danger mb-4">
             {{ loginError() }}
@@ -28,7 +28,7 @@ import { SeoService } from '../../core/services/seo.service';
                 type="email" 
                 id="email" 
                 formControlName="email" 
-                placeholder="admin@apexsoftware.lk" 
+                placeholder="admin@CASPIREsoftware.lk" 
                 class="form-control" 
                 [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched" 
               />
@@ -122,7 +122,7 @@ export class AdminLoginComponent implements OnInit {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/admin/dashboard';
 
     this.loginForm = this.fb.group({
-      email: ['admin@apexsoftware.lk', [Validators.required, Validators.email]],
+      email: ['admin@CASPIREsoftware.lk', [Validators.required, Validators.email]],
       password: ['AdminPass123!', [Validators.required]],
     });
   }

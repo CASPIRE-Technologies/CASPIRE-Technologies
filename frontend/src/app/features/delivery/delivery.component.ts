@@ -188,7 +188,7 @@ export class DeliveryProcessComponent implements OnInit {
   ngOnInit() {
     this.seo.updateMeta({
       title: '9-Step Delivery Lifecycle | Software Engineering Process',
-      description: 'Learn how Apex Software Engineering executes projects through discovery, requirements, agile development, independent QA, UAT, and production SLA support.',
+      description: 'Learn how CASPIRE Software Engineering executes projects through discovery, requirements, agile development, independent QA, UAT, and production SLA support.',
     });
   }
 }

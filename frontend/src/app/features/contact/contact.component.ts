@@ -469,7 +469,7 @@ export class ContactComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.seo.updateMeta({
-      title: 'Contact & Request Consultation | Apex Software Engineering',
+      title: 'Contact & Request Consultation | CASPIRE Software Engineering',
       description: 'Request a free technical consultation with Sri Lanka software engineering leads. Submit requirements or contact office directly.',
     });
 

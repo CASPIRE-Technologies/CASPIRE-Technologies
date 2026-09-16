@@ -25,7 +25,7 @@ import { SeoService } from '../../core/services/seo.service';
           <p><em>Last updated: August 14, 2026 (Pending Final Formal Legal Counsel Review)</em></p>
 
           <h3>1. Data Collection</h3>
-          <p>Apex Software Engineering (Pvt) Ltd collects business contact information (name, corporate email, telephone number, company name) submitted voluntarily via our consultation enquiry forms.</p>
+          <p>CASPIRE Software Engineering (Pvt) Ltd collects business contact information (name, corporate email, telephone number, company name) submitted voluntarily via our consultation enquiry forms.</p>
 
           <h3>2. Purpose of Processing</h3>
           <p>We process your contact details solely to evaluate technical requirements, respond to project requests, and manage client contractual relationships.</p>
@@ -53,7 +53,7 @@ import { SeoService } from '../../core/services/seo.service';
           <p>All custom software code, database schemas, and documentation delivered under formal client agreements transfer full intellectual property rights to the client upon settlement of milestone invoices.</p>
 
           <h3>2. Independent Quality Validation</h3>
-          <p>Apex Software Engineering validates software against agreed specifications through independent QA testing prior to production release.</p>
+          <p>CASPIRE Software Engineering validates software against agreed specifications through independent QA testing prior to production release.</p>
         </div>
       </div>
     </section>
@@ -100,7 +100,7 @@ export class LegalComponent implements OnInit {
 
       this.seo.updateMeta({
         title: this.pageTitle(),
-        description: `Read Apex Software Engineering ${this.pageTitle()} details.`,
+        description: `Read CASPIRE Software Engineering ${this.pageTitle()} details.`,
       });
     });
   }

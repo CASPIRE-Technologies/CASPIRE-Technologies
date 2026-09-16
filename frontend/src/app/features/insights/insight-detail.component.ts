@@ -121,7 +121,7 @@ export class InsightDetailComponent implements OnInit {
       title: slug.replace(/-/g, ' ').toUpperCase(),
       excerpt: 'Blog article on software architecture, quality engineering, digital transformation, and online growth.',
       content: '<p>Many established businesses in Sri Lanka rely heavily on legacy spreadsheets, physical paper ledgers, or disconnected software tools...</p>',
-      authorName: 'Apex Engineering Team',
+      authorName: 'CASPIRE Engineering Team',
       publishedAt: new Date(),
       readTimeMinutes: 5,
     };

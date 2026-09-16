@@ -146,7 +146,7 @@ model BlogPost {
   categoryId      String
   category        BlogCategory @relation(fields: [categoryId], references: [id])
   tags            String       @db.Text // JSON array of tag names
-  authorName      String       @default("Apex Engineering Team")
+  authorName      String       @default("CASPIRE Engineering Team")
   readTimeMinutes Int          @default(5)
   isPublished     Boolean      @default(true)
   metaTitle       String?

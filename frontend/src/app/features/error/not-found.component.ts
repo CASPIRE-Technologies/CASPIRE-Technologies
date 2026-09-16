@@ -52,7 +52,7 @@ export class NotFoundComponent implements OnInit {
   ngOnInit() {
     this.seo.updateMeta({
       title: '404 - Page Not Found',
-      description: 'The requested page could not be found on Apex Software Engineering website.',
+      description: 'The requested page could not be found on CASPIRE Software Engineering website.',
     });
   }
 }

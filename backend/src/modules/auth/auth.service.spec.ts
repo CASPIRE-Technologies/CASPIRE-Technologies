@@ -56,7 +56,7 @@ describe('AuthService', () => {
       mockPrismaService.user.findUnique.mockResolvedValue(null);
 
       await expect(
-        service.login({ email: 'nonexistent@apexsoftware.lk', password: 'password' }),
+        service.login({ email: 'nonexistent@CASPIREsoftware.lk', password: 'password' }),
       ).rejects.toThrow(UnauthorizedException);
     });
 
@@ -64,14 +64,14 @@ describe('AuthService', () => {
       const hashedPassword = await bcrypt.hash('correctPassword', 10);
       mockPrismaService.user.findUnique.mockResolvedValue({
         id: '1',
-        email: 'admin@apexsoftware.lk',
+        email: 'admin@CASPIREsoftware.lk',
         passwordHash: hashedPassword,
         status: 'ACTIVE',
         role: 'ADMIN',
       });
 
       await expect(
-        service.login({ email: 'admin@apexsoftware.lk', password: 'wrongPassword' }),
+        service.login({ email: 'admin@CASPIREsoftware.lk', password: 'wrongPassword' }),
       ).rejects.toThrow(UnauthorizedException);
     });
 
@@ -79,7 +79,7 @@ describe('AuthService', () => {
       const hashedPassword = await bcrypt.hash('correctPassword', 10);
       mockPrismaService.user.findUnique.mockResolvedValue({
         id: '1',
-        email: 'admin@apexsoftware.lk',
+        email: 'admin@CASPIREsoftware.lk',
         passwordHash: hashedPassword,
         status: 'ACTIVE',
         role: 'ADMIN',
@@ -87,13 +87,13 @@ describe('AuthService', () => {
       mockPrismaService.refreshToken.create.mockResolvedValue({});
 
       const result = await service.login({
-        email: 'admin@apexsoftware.lk',
+        email: 'admin@CASPIREsoftware.lk',
         password: 'correctPassword',
       });
 
       expect(result).toHaveProperty('accessToken');
       expect(result).toHaveProperty('refreshToken');
-      expect(result.user).toEqual({ id: '1', email: 'admin@apexsoftware.lk', role: 'ADMIN' });
+      expect(result.user).toEqual({ id: '1', email: 'admin@CASPIREsoftware.lk', role: 'ADMIN' });
       expect(mockPrismaService.refreshToken.create).toHaveBeenCalledTimes(1);
     });
 
@@ -101,21 +101,21 @@ describe('AuthService', () => {
       const hashedPassword = await bcrypt.hash('correctPassword', 10);
       mockPrismaService.user.findUnique.mockResolvedValue({
         id: '1',
-        email: 'suspended@apexsoftware.lk',
+        email: 'suspended@CASPIREsoftware.lk',
         passwordHash: hashedPassword,
         status: 'SUSPENDED',
         role: 'ADMIN',
       });
 
       await expect(
-        service.login({ email: 'suspended@apexsoftware.lk', password: 'correctPassword' }),
+        service.login({ email: 'suspended@CASPIREsoftware.lk', password: 'correctPassword' }),
       ).rejects.toThrow(UnauthorizedException);
     });
   });
 
   describe('register', () => {
     it('should throw ConflictException if email already exists', async () => {
-      mockPrismaService.user.findUnique.mockResolvedValue({ id: '1', email: 'taken@apexsoftware.lk' });
+      mockPrismaService.user.findUnique.mockResolvedValue({ id: '1', email: 'taken@CASPIREsoftware.lk' });
 
       await expect(
         service.register({
@@ -137,7 +137,7 @@ describe('AuthService', () => {
       mockPrismaService.refreshToken.create.mockResolvedValue({});
 
       const result = await service.register({
-        email: 'new@apexsoftware.lk',
+        email: 'new@CASPIREsoftware.lk',
         password: 'password123',
         full_name: 'new-caspire',
         password_confirmation: 'password123'
@@ -146,7 +146,7 @@ describe('AuthService', () => {
       expect(mockPrismaService.user.create).toHaveBeenCalledWith(
         expect.objectContaining({
           data: expect.objectContaining({
-            email: 'new@apexsoftware.lk',
+            email: 'new@CASPIREsoftware.lk',
             role: 'USER',
           }),
         }),
@@ -154,7 +154,7 @@ describe('AuthService', () => {
       // password should never be stored in plaintext
       const createArgs = mockPrismaService.user.create.mock.calls[0][0];
       expect(createArgs.data.password ?? createArgs.data.passwordHash).not.toBe('password123');
-      expect(result.user).toEqual({ id: '2', email: 'new@apexsoftware.lk', role: 'USER' });
+      expect(result.user).toEqual({ id: '2', email: 'new@CASPIREsoftware.lk', role: 'USER' });
     });
   });
 
@@ -164,7 +164,7 @@ describe('AuthService', () => {
     });
 
     it('should throw UnauthorizedException if stored token is revoked', async () => {
-      mockJwtService.verify.mockReturnValue({ sub: '1', email: 'admin@apexsoftware.lk', role: 'ADMIN' });
+      mockJwtService.verify.mockReturnValue({ sub: '1', email: 'admin@CASPIREsoftware.lk', role: 'ADMIN' });
       mockPrismaService.refreshToken.findUnique.mockResolvedValue({
         tokenHash: 'somehash',
         revoked: true,
@@ -175,7 +175,7 @@ describe('AuthService', () => {
     });
 
     it('should throw UnauthorizedException if stored token is expired', async () => {
-      mockJwtService.verify.mockReturnValue({ sub: '1', email: 'admin@apexsoftware.lk', role: 'ADMIN' });
+      mockJwtService.verify.mockReturnValue({ sub: '1', email: 'admin@CASPIREsoftware.lk', role: 'ADMIN' });
       mockPrismaService.refreshToken.findUnique.mockResolvedValue({
         tokenHash: 'somehash',
         revoked: false,
@@ -186,7 +186,7 @@ describe('AuthService', () => {
     });
 
     it('should rotate the refresh token and return a new pair', async () => {
-      mockJwtService.verify.mockReturnValue({ sub: '1', email: 'admin@apexsoftware.lk', role: 'ADMIN' });
+      mockJwtService.verify.mockReturnValue({ sub: '1', email: 'admin@CASPIREsoftware.lk', role: 'ADMIN' });
       mockPrismaService.refreshToken.findUnique.mockResolvedValue({
         tokenHash: 'somehash',
         revoked: false,

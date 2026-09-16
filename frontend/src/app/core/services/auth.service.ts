@@ -42,13 +42,33 @@ export class AuthService {
     this.router.navigate(['/admin/login']);
   }
 
+  refreshToken(refreshToken: string): Observable<any> {
+    return this.http.post<any>('/api/v1/auth/refresh', { refreshToken }).pipe(
+      tap((res) => {
+        if (res.accessToken) {
+          this.setSession(res.user, res.accessToken, res.refreshToken);
+        }
+      })
+    );
+  }
+
+  register(user: any): Observable<any> {
+    return this.http.post<any>('/api/v1/auth/register', user).pipe(
+      tap((res) => {
+        if (res.accessToken) {
+          this.setSession(res.user, res.accessToken, res.refreshToken);
+        }
+      })
+    );
+  }
+
   private setSession(user: User, token: string, refreshToken: string) {
     this.currentUser.set(user);
     this.accessToken.set(token);
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.setItem('apex_user', JSON.stringify(user));
-      localStorage.setItem('apex_token', token);
-      localStorage.setItem('apex_refresh_token', refreshToken);
+      localStorage.setItem('CASPIRE_user', JSON.stringify(user));
+      localStorage.setItem('CASPIRE_token', token);
+      localStorage.setItem('CASPIRE_refresh_token', refreshToken);
     }
   }
 
@@ -56,15 +76,15 @@ export class AuthService {
     this.currentUser.set(null);
     this.accessToken.set(null);
     if (typeof window !== 'undefined' && window.localStorage) {
-      localStorage.removeItem('apex_user');
-      localStorage.removeItem('apex_token');
-      localStorage.removeItem('apex_refresh_token');
+      localStorage.removeItem('CASPIRE_user');
+      localStorage.removeItem('CASPIRE_token');
+      localStorage.removeItem('CASPIRE_refresh_token');
     }
   }
 
   private getStoredUser(): User | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      const data = localStorage.getItem('apex_user');
+      const data = localStorage.getItem('CASPIRE_user');
       return data ? JSON.parse(data) : null;
     }
     return null;
@@ -72,14 +92,14 @@ export class AuthService {
 
   private getStoredToken(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('apex_token');
+      return localStorage.getItem('CASPIRE_token');
     }
     return null;
   }
 
   private getStoredRefreshToken(): string | null {
     if (typeof window !== 'undefined' && window.localStorage) {
-      return localStorage.getItem('apex_refresh_token');
+      return localStorage.getItem('CASPIRE_refresh_token');
     }
     return null;
   }

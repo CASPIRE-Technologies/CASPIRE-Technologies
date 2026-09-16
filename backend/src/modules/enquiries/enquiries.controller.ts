@@ -68,4 +68,13 @@ export class EnquiriesController {
   ) {
     return this.enquiriesService.addNote(id, dto, userId);
   }
+
+  @Post('inquiry')
+  @ApiOperation({ summary: 'Submit a public consultation request' })
+  async createInquiry (
+    @Body() dto: CreateEnquiryDto,
+    @CurrentUser('id') userId: string
+  ) {
+    return this.enquiriesService.create(dto);
+  }
 }

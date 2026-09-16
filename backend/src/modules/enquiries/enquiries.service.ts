@@ -50,7 +50,7 @@ export class EnquiriesService {
 
     return {
       success: true,
-      message: 'Thank you for contacting Apex Software Engineering. Our consultation team will respond within 24 business hours.',
+      message: 'Thank you for contacting CASPIRE Software Engineering. Our consultation team will respond within 24 business hours.',
       enquiryId: enquiry.id,
     };
   }
@@ -156,8 +156,8 @@ export class EnquiriesService {
     });
 
     await transporter.sendMail({
-      from: `"Apex System Alert" <${smtpUser}>`,
-      to: process.env.NOTIFICATION_EMAIL || 'contact@apexsoftware.lk',
+      from: `"CASPIRE System Alert" <${smtpUser}>`,
+      to: process.env.NOTIFICATION_EMAIL || 'contact@CASPIREsoftware.lk',
       subject: `[New Enquiry] ${enquiry.serviceOfInterest} - ${enquiry.company}`,
       html: `
         <h2>New Consultation Request Received</h2>

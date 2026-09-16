@@ -23,7 +23,7 @@ export const siteContent = {
     email: {
       label: 'Primary Email',
       value: 'caspiretechnologies@gmail.com',
-      href: 'mailto:contact@apexsoftware.lk',
+      href: 'mailto:contact@CASPIREsoftware.lk',
     },
     telephone: {
       label: 'Office Telephone',
@@ -39,8 +39,8 @@ export const siteContent = {
     },
     linkedin: {
       label: 'Official LinkedIn Page',
-      display: 'linkedin.com/company/apex-software-lk ->',
-      href: 'https://www.linkedin.com/company/apex-software-lk',
+      display: 'linkedin.com/company/CASPIRE-software-lk ->',
+      href: 'https://www.linkedin.com/company/CASPIRE-software-lk',
     },
   },
   seo: {

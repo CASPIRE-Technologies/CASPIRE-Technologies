@@ -6,7 +6,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    container_name: apex_backend_api
+    container_name: CASPIRE_backend_api
     restart: always
     ports:
       - "3000:3000"
@@ -48,7 +48,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
-    container_name: apex_frontend_web
+    container_name: CASPIRE_frontend_web
     restart: always
     ports:
       - "4000:80"

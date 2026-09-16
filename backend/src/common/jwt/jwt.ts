@@ -13,8 +13,8 @@ export interface JwtPayload {
 }
 
 export default class JWT {
-  static readonly secret = process.env.JWT_SECRET || 'apex-secret-key-super-secure-change-in-prod';
-  static readonly refreshSecret = process.env.JWT_REFRESH_SECRET || 'apex-refresh-secret-key-change-in-prod';
+  static readonly secret = process.env.JWT_SECRET || 'CASPIRE-secret-key-super-secure-change-in-prod';
+  static readonly refreshSecret = process.env.JWT_REFRESH_SECRET || 'CASPIRE-refresh-secret-key-change-in-prod';
 
   private static svc = new JwtService({});
 

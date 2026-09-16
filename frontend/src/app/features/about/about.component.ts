@@ -15,7 +15,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
         <div class="badge badge-teal mb-2">
           <span class="pulse-dot"></span> Company Overview
         </div>
-        <h1>About Apex Software Engineering</h1>
+        <h1>About CASPIRE Software Engineering</h1>
         <p class="header-lead">
           Founded on core principles of technical rigor, transparent execution, and independent quality validation.
         </p>
@@ -387,7 +387,7 @@ export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.seo.updateMeta({
       title: 'About Us | Sri Lankan IT & Software Engineering Partner',
-      description: 'Learn about Apex Software Engineering vision, founding capability areas, operating principles, and commitment to software quality.',
+      description: 'Learn about CASPIRE Software Engineering vision, founding capability areas, operating principles, and commitment to software quality.',
     });
   }
 

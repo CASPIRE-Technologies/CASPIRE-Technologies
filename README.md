@@ -1,6 +1,6 @@
-# Apex Software Engineering (Pvt) Ltd - Corporate Web Application
+# CASPIRE Software Engineering (Pvt) Ltd - Corporate Web Application
 
-A production-ready, full-stack corporate web application, RESTful API, and administration portal built for **Apex Software Engineering (Pvt) Ltd**, an end-to-end software engineering and digital transformation partner in Colombo, Sri Lanka.
+A production-ready, full-stack corporate web application, RESTful API, and administration portal built for **CASPIRE Software Engineering (Pvt) Ltd**, an end-to-end software engineering and digital transformation partner in Colombo, Sri Lanka.
 
 ---
 
@@ -140,7 +140,7 @@ The Frontend will be running on `http://localhost:4200`.
 ## 🔑 Default Admin Account
 
 During database seeding (`seed.ts`), a superadmin user is automatically created:
-- **Email**: `admin@apexsoftware.lk`
+- **Email**: `admin@CASPIREsoftware.lk`
 - **Password**: `AdminPass123!`
 
 > [!IMPORTANT]
@@ -170,8 +170,8 @@ npm run build         # Build production Angular SSR bundle
 ## 🛡️ Security & Production Checklist
 
 1. **Environment Secrets**: Update `JWT_SECRET`, `JWT_REFRESH_SECRET`, and `MYSQL_ROOT_PASSWORD` with cryptographically random strings.
-2. **CORS Configuration**: Restrict `CORS_ORIGIN` in `.env` to your production domain (e.g. `https://www.apexsoftware.lk`).
-3. **Database Backups**: Schedule daily automated `mysqldump` backups of `apex_company_db` to offsite storage.
+2. **CORS Configuration**: Restrict `CORS_ORIGIN` in `.env` to your production domain (e.g. `https://www.CASPIREsoftware.lk`).
+3. **Database Backups**: Schedule daily automated `mysqldump` backups of `CASPIRE_company_db` to offsite storage.
 4. **HTTPS Enforcement**: Deploy behind an Nginx or Cloudflare reverse proxy with TLS 1.3 enabled.
 
 ---

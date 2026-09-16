@@ -224,7 +224,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
           </div>
           <div class="managed-card reveal">
             <h3>Need Maintenance for Existing Software?</h3>
-            <p>Whether built by Apex or a previous team, we provide software modernization and managed application support.</p>
+            <p>Whether built by CASPIRE or a previous team, we provide software modernization and managed application support.</p>
             <a routerLink="/contact" class="btn btn-primary mt-3">Discuss Support Options →</a>
           </div>
         </div>

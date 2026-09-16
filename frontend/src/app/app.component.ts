@@ -1,35 +1,61 @@
-import { AfterViewInit, Component, NgZone, OnDestroy, PLATFORM_ID, inject } from '@angular/core';
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './shared/components/header/header.component';
-import { FooterComponent } from './shared/components/footer/footer.component';
-import { CookieBannerComponent } from './shared/components/cookie-banner/cookie-banner.component';
+import {
+  AfterViewInit,
+  Component,
+  NgZone,
+  OnDestroy,
+  PLATFORM_ID,
+  inject,
+} from "@angular/core";
+import { DOCUMENT, isPlatformBrowser } from "@angular/common";
+import { Router, RouterOutlet } from "@angular/router";
+import { HeaderComponent } from "./shared/components/header/header.component";
+import { FooterComponent } from "./shared/components/footer/footer.component";
+import { CookieBannerComponent } from "./shared/components/cookie-banner/cookie-banner.component";
 
 @Component({
-  selector: 'app-root',
+  selector: "app-root",
   standalone: true,
-  imports: [RouterOutlet, HeaderComponent, FooterComponent, CookieBannerComponent],
+  imports: [
+    RouterOutlet,
+    HeaderComponent,
+    FooterComponent,
+    CookieBannerComponent,
+  ],
   template: `
-    <app-header></app-header>
-    <main id="main-content" role="main">
-      <router-outlet (activate)="queueReveal()"></router-outlet>
-    </main>
-    <app-footer></app-footer>
-    <app-cookie-banner></app-cookie-banner>
-  `,
-  styles: [`
-    #main-content {
-      min-height: calc(100vh - 72px - 350px);
+    @if (isAuthRoute()) {
+      <main id="main-content" role="main">
+        <router-outlet (activate)="queueReveal()"></router-outlet>
+      </main>
+    } @else {
+      <app-header></app-header>
+      <main id="main-content" role="main">
+        <router-outlet (activate)="queueReveal()"></router-outlet>
+      </main>
+      <app-footer></app-footer>
+      <app-cookie-banner></app-cookie-banner>
     }
-  `]
+  `,
+  styles: [
+    `
+      #main-content {
+        min-height: calc(100vh - 72px - 350px);
+      }
+    `,
+  ],
 })
 export class AppComponent implements AfterViewInit, OnDestroy {
   private doc = inject(DOCUMENT);
   private platformId = inject(PLATFORM_ID);
   private zone = inject(NgZone);
+  private router = inject(Router);
+
   private observer?: IntersectionObserver;
   private mutationObserver?: MutationObserver;
   private revealTimer?: ReturnType<typeof setTimeout>;
+
+  isAuthRoute(): boolean {
+    return this.router.url.includes("auth");
+  }
 
   ngAfterViewInit() {
     if (!isPlatformBrowser(this.platformId)) return;
@@ -39,16 +65,16 @@ export class AppComponent implements AfterViewInit, OnDestroy {
         (entries) => {
           for (const entry of entries) {
             if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
+              entry.target.classList.add("is-visible");
               this.observer?.unobserve(entry.target);
             }
           }
         },
-        { rootMargin: '0px 0px -8% 0px', threshold: 0.12 },
+        { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
       );
 
       this.mutationObserver = new MutationObserver(() => this.queueReveal());
-      const main = this.doc.getElementById('main-content');
+      const main = this.doc.getElementById("main-content");
       if (main) {
         this.mutationObserver.observe(main, { childList: true, subtree: true });
       }
@@ -72,25 +98,30 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   private prepareRevealElements() {
     const selectors = [
-      '.page-header .container',
-      '.hero-content',
-      '.trust-pill',
-      '.section-header',
-      '.card',
-      '.problem-card',
-      '.process-step',
-      '.managed-content',
-      '.managed-card',
-      '.cta-section .container',
-      '.footer-col',
-    ].join(',');
+      ".page-header .container",
+      ".hero-content",
+      ".trust-pill",
+      ".section-header",
+      ".card",
+      ".problem-card",
+      ".process-step",
+      ".managed-content",
+      ".managed-card",
+      ".cta-section .container",
+      ".footer-col",
+    ].join(",");
 
-    const elements = Array.from(this.doc.querySelectorAll<HTMLElement>(selectors));
+    const elements = Array.from(
+      this.doc.querySelectorAll<HTMLElement>(selectors),
+    );
     elements.forEach((element, index) => {
-      if (element.classList.contains('scroll-reveal')) return;
+      if (element.classList.contains("scroll-reveal")) return;
 
-      element.classList.add('scroll-reveal');
-      element.style.setProperty('--reveal-delay', `${Math.min(index % 6, 5) * 55}ms`);
+      element.classList.add("scroll-reveal");
+      element.style.setProperty(
+        "--reveal-delay",
+        `${Math.min(index % 6, 5) * 55}ms`,
+      );
       this.observer?.observe(element);
     });
   }

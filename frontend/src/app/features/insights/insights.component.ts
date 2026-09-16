@@ -143,7 +143,7 @@ export class InsightsComponent implements OnInit {
         excerpt: 'How growing business enterprises can replace error-prone manual spreadsheets with secure, scalable custom web applications.',
         category: { name: 'SME Digitization' },
         readTimeMinutes: 5,
-        authorName: 'Apex Engineering Team',
+        authorName: 'CASPIRE Engineering Team',
       },
       {
         slug: 'why-independent-qa-saves-maintenance-costs',
@@ -151,7 +151,7 @@ export class InsightsComponent implements OnInit {
         excerpt: 'Discover why separating software development from testing prevents production failures and reduces emergency code hotfixes.',
         category: { name: 'Quality Engineering' },
         readTimeMinutes: 6,
-        authorName: 'Apex QA Practice Lead',
+        authorName: 'CASPIRE QA Practice Lead',
       },
       {
         slug: 'securing-digital-payments-for-south-asian-e-commerce',
@@ -159,7 +159,7 @@ export class InsightsComponent implements OnInit {
         excerpt: 'Best practices for integrating PayHere, LankaPay, and international payment gateways with secure backend security tokenization.',
         category: { name: 'Cloud & Security' },
         readTimeMinutes: 4,
-        authorName: 'Apex Security Team',
+        authorName: 'CASPIRE Security Team',
       },
     ];
   }

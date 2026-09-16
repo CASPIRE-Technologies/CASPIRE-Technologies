@@ -17,7 +17,7 @@ import { SeoService } from '../../core/services/seo.service';
         <div class="container admin-nav-container">
           <div class="brand">
             <span class="logo-mark">A</span>
-            <strong>Apex Admin Portal</strong>
+            <strong>CASPIRE Admin Portal</strong>
           </div>
 
           <div class="user-meta">
@@ -395,7 +395,7 @@ export class AdminDashboardComponent implements OnInit {
   newNoteText = '';
 
   ngOnInit() {
-    this.seo.updateMeta({ title: 'Admin Dashboard', description: 'Apex Admin Dashboard' });
+    this.seo.updateMeta({ title: 'Admin Dashboard', description: 'CASPIRE Admin Dashboard' });
     this.loadEnquiries();
     this.loadServices();
     this.loadPortfolio();

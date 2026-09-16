@@ -25,7 +25,7 @@ export class RegisterDto {
   password_confirmation!: string;
 }
 export class LoginDto {
-  @ApiProperty({ example: 'admin@apexsoftware.lk', description: 'User email address' })
+  @ApiProperty({ example: 'admin@CASPIREsoftware.lk', description: 'User email address' })
   @IsEmail({}, { message: 'Invalid email address' })
   @IsNotEmpty()
   email!: string;

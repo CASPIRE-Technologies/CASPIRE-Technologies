@@ -142,7 +142,7 @@ CREATE TABLE "blog_posts" (
     "content" TEXT NOT NULL,
     "categoryId" TEXT NOT NULL,
     "tags" TEXT NOT NULL,
-    "authorName" TEXT NOT NULL DEFAULT 'Apex Engineering Team',
+    "authorName" TEXT NOT NULL DEFAULT 'CASPIRE Engineering Team',
     "readTimeMinutes" INTEGER NOT NULL DEFAULT 5,
     "isPublished" BOOLEAN NOT NULL DEFAULT true,
     "metaTitle" TEXT,
