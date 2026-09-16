@@ -46,7 +46,7 @@ export const siteContent = {
   seo: {
     defaultTitle: 'CASPIRE Technologies | Sri Lankan IT & Digital Transformation Partner',
     defaultDescription: 'An end-to-end software engineering and digital transformation partner delivering secure, reliable and scalable business solutions for Sri Lankan enterprises and international clients.',
-    siteUrl: 'https://www.apexsoftware.lk',
+    siteUrl: 'https://www.caspiretechnologies.lk',
     organizationDescription: 'End-to-end software engineering and digital transformation partner in Sri Lanka.',
   },
 } as const;

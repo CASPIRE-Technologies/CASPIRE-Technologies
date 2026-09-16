@@ -95,7 +95,6 @@ import { siteContent } from '../../../site-content';
             <a routerLink="/privacy-policy">Privacy Policy</a>
             <a routerLink="/cookie-policy">Cookie Policy</a>
             <a routerLink="/terms-of-service">Terms of Service</a>
-            <a routerLink="/admin/login" class="admin-link">Admin Portal</a>
           </div>
         </div>
       </div>

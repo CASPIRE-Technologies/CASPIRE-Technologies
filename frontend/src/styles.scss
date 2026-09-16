@@ -147,6 +147,22 @@ a:hover { color: var(--color-navy-dark); }
 .section {
   padding-top: 5rem;
   padding-bottom: 5rem;
+  animation: reveal linear auto;
+  animation-timeline: view();
+  /* Restricts the transition to when the element enters/exits the viewport */
+  animation-range: entry 15% cover 40%;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0.6;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
 }
 
 @media (max-width: 1024px) {
