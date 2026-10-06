@@ -14,9 +14,9 @@ export const siteContent = {
     intro: 'Our business office and engineering center are located at the World Trade Center in Colombo.',
     address: {
       label: 'Headquarters Address',
-      full: 'Level 12, West Tower, World Trade Center, Colombo 01, Sri Lanka',
-      street: 'Level 12, West Tower, World Trade Center',
-      locality: 'Colombo 01',
+      full: 'No 18th, 7th Cross Lane, Borupana road, Rathmalana, Sri Lanka',
+      street: '7th Cross Lane, Borupana road, Rathmalana',
+      locality: 'Rathmalana',
       region: 'Western Province',
       country: 'LK',
     },
