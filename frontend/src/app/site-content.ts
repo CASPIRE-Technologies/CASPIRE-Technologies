@@ -23,19 +23,19 @@ export const siteContent = {
     email: {
       label: 'Primary Email',
       value: 'caspiretechnologies@gmail.com',
-      href: 'mailto:contact@CASPIREsoftware.lk',
+      href: 'mailto:caspiretechnologies@gmail.com',
     },
     telephone: {
       label: 'Office Telephone',
-      value: '+94 11 234 5678',
-      href: 'tel:+94112345678',
-      schemaValue: '+94-11-234-5678',
+      value: '+94 75 651 9837',
+      href: 'tel:+94756519837',
+      schemaValue: '+94-75-651-9837',
     },
     whatsapp: {
       label: 'WhatsApp Business',
-      value: '+94 77 123 4567',
-      href: 'https://wa.me/94771234567',
-      linkText: 'Chat Direct on WhatsApp (+94 77 123 4567) ->',
+      value: '+94 75 651 9837',
+      href: 'https://wa.me/94756519837',
+      linkText: 'Chat Direct on WhatsApp (+94 75 651 9837) ->',
     },
     linkedin: {
       label: 'Official LinkedIn Page',
