@@ -39,9 +39,9 @@ export const routes: Routes = [
   { path: 'privacy-policy', component: LegalComponent },
   { path: 'cookie-policy', component: LegalComponent },
   { path: 'terms-of-service', component: LegalComponent },
-  { path: 'admin/login', component: AdminLoginComponent, title: 'Admin Login | CASPIRE Software Engineering' },
-  { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [authGuard], title: 'Admin Dashboard | CASPIRE' },
-  { path: 'admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
+  // { path: 'admin/login', component: AdminLoginComponent, title: 'Admin Login | CASPIRE Software Engineering' },
+  // { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [authGuard], title: 'Admin Dashboard | CASPIRE' },
+  // { path: 'admin', redirectTo: 'admin/dashboard', pathMatch: 'full' },
   { path: '404', component: NotFoundComponent, title: 'Page Not Found | CASPIRE Software Engineering' },
   { path: '**', redirectTo: '404' }
 ];
