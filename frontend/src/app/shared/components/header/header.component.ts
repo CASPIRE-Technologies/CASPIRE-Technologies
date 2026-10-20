@@ -2,12 +2,11 @@ import { Component, signal, effect, HostListener } from "@angular/core";
 import { RouterLink, RouterLinkActive } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { siteContent } from "../../../site-content";
-import { LoginDetailsModalComponent } from "../../../features/modals/login_details_modal.component";
 
 @Component({
   selector: "app-header",
   standalone: true,
-  imports: [CommonModule, RouterLink, RouterLinkActive, LoginDetailsModalComponent],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   template: `
     <header class="site-header" [class.scrolled]="isScrolled()" role="banner">
       <div class="container header-container">
@@ -64,16 +63,6 @@ import { LoginDetailsModalComponent } from "../../../features/modals/login_detai
             <span class="bar"></span>
           </button>
 
-          <!-- User Profile / Auth Signin Wrapper -->
-          <div 
-            class="signin-wrap" 
-            (mouseenter)="openModal()" 
-            (click)="toggleModal()"
-          >
-            @if(isModalOpen()){
-              <app-login-modal (close)="closeModal()"></app-login-modal>
-            }
-          </div>
         </div>
       </div>
 
@@ -110,35 +99,12 @@ import { LoginDetailsModalComponent } from "../../../features/modals/login_detai
             (click)="closeMenu()"
             >Request Consultation</a
           >
-          <a
-            routerLink="/auth/signin"
-            class="btn btn-primary w-full mt-2"
-            (click)="closeMenu()"
-            >Sign In</a
-          >
         </nav>
       </div>
     </header>
   `,
   styles: [
     `
-      .signin-wrap {
-        width: 40px;
-        height: 40px;
-        background-image: url("https://gravatar.com/avatar/4d05459ab91779b811e26e821ceee66c?s=400&d=mp&r=x");
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        border-radius: 100%;
-        position: relative;
-        border: 2px solid var(--color-teal-dark, #0d9488);
-        transition: transform 0.2s ease, border-color 0.2s ease;
-      }
-      .signin-wrap:hover {
-        cursor: pointer;
-        transform: translateY(-2px);
-        border-color: var(--color-teal-accent, #00f2fe);
-      }
       .site-header {
         position: sticky;
         top: 0;
@@ -357,7 +323,6 @@ import { LoginDetailsModalComponent } from "../../../features/modals/login_detai
 
       .w-full { width: 100%; }
       .mt-4 { margin-top: 1rem; }
-      .mt-2 { margin-top: 0.5rem; }
 
       @media (prefers-reduced-motion: reduce) {
         .site-header,
@@ -395,7 +360,6 @@ export class HeaderComponent {
   content = siteContent;
   isMenuOpen = signal(false);
   isScrolled = signal(false);
-  isModalOpen = signal(false);
 
   constructor() {
     effect(() => {
@@ -411,7 +375,6 @@ export class HeaderComponent {
   @HostListener("window:keydown.escape")
   onEscape() {
     this.closeMenu();
-    this.closeModal();
   }
 
   toggleMenu() {
@@ -422,15 +385,4 @@ export class HeaderComponent {
     this.isMenuOpen.set(false);
   }
 
-  toggleModal() {
-    this.isModalOpen.update((v) => !v);
-  }
-
-  openModal() {
-    this.isModalOpen.set(true);
-  }
-
-  closeModal() {
-    this.isModalOpen.set(false);
-  }
 }
