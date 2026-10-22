@@ -115,8 +115,8 @@ import { SeoService } from '../../core/services/seo.service';
       transform: translateY(-6px);
       box-shadow: 0 16px 32px rgba(15, 23, 42, 0.1);
     }
-    .project-image-wrap { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #111827; }
-    .project-image { width: 100%; height: 100%; display: block; object-fit: contain; object-position: center; transition: transform 0.5s ease; }
+    .project-image-wrap { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #e2e8f0; }
+    .project-image { width: 100%; height: 100%; display: block; object-fit: cover; object-position: top center; transition: transform 0.5s ease; }
     .portfolio-card:hover .project-image, .portfolio-card:focus-within .project-image { transform: scale(1.04); }
     .project-overlay {
       position: absolute;
