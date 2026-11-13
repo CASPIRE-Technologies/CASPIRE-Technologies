@@ -218,7 +218,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       title: 'PIC Power Infrastructure Consultants',
       type: 'Power infrastructure & engineering',
       summary: 'A professional consultancy website for transmission lines, distribution networks, substations, and associated civil works.',
-      image: '/assets/projects/pic-power-infrastructure.svg',
+      image: '/assets/projects/pic-power-infrastructure.png',
       previewUrl: 'https://pic-website-gray.vercel.app',
     },
   ]);
