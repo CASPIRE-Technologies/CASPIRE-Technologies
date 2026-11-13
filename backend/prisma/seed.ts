@@ -293,6 +293,23 @@ async function main() {
       isFeatured: true,
       displayOrder: 3,
     },
+    {
+      slug: 'pic-power-infrastructure-consultants',
+      title: 'PIC Power Infrastructure Consultants',
+      summary: 'A professional consultancy website for transmission lines, distribution networks, substations, and associated civil works.',
+      clientIndustry: 'Power Infrastructure & Engineering',
+      challenges: 'A specialist engineering consultancy needed a clear digital presence to communicate its capabilities and project lifecycle.',
+      solution: 'Designed and built a focused website presenting consultancy, design, procurement, implementation, and handover services.',
+      outcomes: JSON.stringify([
+        'Presented core power infrastructure capabilities in a clear, professional format',
+        'Created a responsive experience for prospective engineering clients',
+        'Made project and consultation pathways easy to discover'
+      ]),
+      demoUrl: 'https://pic-website-gray.vercel.app',
+      technologies: JSON.stringify(['Angular', 'TypeScript', 'SCSS', 'Vercel']),
+      isFeatured: true,
+      displayOrder: 4,
+    },
   ];
 
   for (const p of portfolio) {

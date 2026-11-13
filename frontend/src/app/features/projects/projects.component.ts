@@ -214,6 +214,13 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       image: '/assets/projects/Screenshot 2026-10-20 at 11.00.18.png',
       previewUrl: 'https://musicsite-kappa.vercel.app',
     },
+    {
+      title: 'PIC Power Infrastructure Consultants',
+      type: 'Power infrastructure & engineering',
+      summary: 'A professional consultancy website for transmission lines, distribution networks, substations, and associated civil works.',
+      image: '/assets/projects/pic-power-infrastructure.svg',
+      previewUrl: 'https://pic-website-gray.vercel.app',
+    },
   ]);
 
   ngOnInit() {
