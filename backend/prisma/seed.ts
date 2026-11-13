@@ -16,7 +16,7 @@ async function main() {
     { key: 'company_phone', value: '+94704588299', description: 'Primary office telephone' },
     { key: 'company_whatsapp', value: '+94704588299', description: 'WhatsApp business contact' },
     { key: 'company_address', value: 'Level 12, West Tower, World Trade Center, Colombo 01, Sri Lanka', description: 'Headquarters physical address' },
-    { key: 'company_linkedin', value: 'https://www.linkedin.com/company/CASPIRE-software-lk', description: 'Official LinkedIn page' },
+    { key: 'company_linkedin', value: 'https://www.linkedin.com/company/caspire-technologies/?viewAsMember=true', description: 'Official LinkedIn page' },
     { key: 'meta_default_title', value: 'CASPIRE Software Engineering | Sri Lankan IT & Digital Transformation Partner', description: 'Default homepage title' },
     { key: 'meta_default_description', value: 'An end-to-end software engineering and digital transformation partner delivering secure, reliable and scalable business solutions for Sri Lankan enterprises and international clients.', description: 'Default homepage description' },
   ];

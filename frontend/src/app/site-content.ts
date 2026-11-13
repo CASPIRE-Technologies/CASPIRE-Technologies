@@ -39,8 +39,8 @@ export const siteContent = {
     },
     linkedin: {
       label: 'Official LinkedIn Page',
-      display: 'linkedin.com/company/CASPIRE-software-lk ->',
-      href: 'https://www.linkedin.com/company/CASPIRE-software-lk',
+      display: 'linkedin.com/company/caspire-technologies ->',
+      href: 'https://www.linkedin.com/company/caspire-technologies/?viewAsMember=true',
     },
   },
   seo: {
