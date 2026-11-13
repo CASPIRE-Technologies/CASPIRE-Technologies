@@ -198,7 +198,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       type: 'Tourism & hospitality',
       summary: 'A warm, conversion-focused guest house experience for stays in Nallathanniya.',
       image: '/assets/projects/daddys-guest-house.png',
-      previewUrl: 'https://daddy-s-gust-house-ap5c.vercel.app',
+      previewUrl: 'https://www.daddysguest.com',
     },
     {
       title: 'MiniVerse Prints',
@@ -212,7 +212,7 @@ export class ProjectsComponent implements OnInit, AfterViewInit, OnDestroy {
       type: 'Music & entertainment',
       summary: 'An atmospheric artist website for showcasing music, videos, events, and new releases.',
       image: '/assets/projects/Screenshot 2026-10-20 at 11.00.18.png',
-      previewUrl: 'https://musicsite-kappa.vercel.app',
+      previewUrl: 'https://music-site-rouge.vercel.app',
     },
     {
       title: 'PIC Power Infrastructure Consultants',
