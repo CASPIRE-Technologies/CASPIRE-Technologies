@@ -92,7 +92,7 @@
       "url": "{{ base_url }}/v1/enquiries",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n  \"name\": \"Kamal Silva\",\n  \"company\": \"Demo Construction Ltd\",\n  \"email\": \"kamal@example.lk\",\n  \"telephone\": \"+94 77 123 4567\",\n  \"country\": \"Sri Lanka\",\n  \"serviceOfInterest\": \"SME Workflow Digitization\",\n  \"budgetRange\": \"$5,000 - $10,000\",\n  \"preferredContactMethod\": \"Email\",\n  \"description\": \"We need a material requisition and approval workflow.\",\n  \"consent\": true\n}"
+        "text": "{\n  \"name\": \"Kamal Silva\",\n  \"company\": \"Demo Construction Ltd\",\n  \"email\": \"kamal@example.lk\",\n  \"telephone\": \"+94704588299\",\n  \"country\": \"Sri Lanka\",\n  \"serviceOfInterest\": \"SME Workflow Digitization\",\n  \"budgetRange\": \"$5,000 - $10,000\",\n  \"preferredContactMethod\": \"Email\",\n  \"description\": \"We need a material requisition and approval workflow.\",\n  \"consent\": true\n}"
       },
       "headers": [
         { "name": "Content-Type", "value": "application/json" }

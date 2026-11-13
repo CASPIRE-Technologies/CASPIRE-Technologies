@@ -238,9 +238,9 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
         <p class="cta-lead">Speak with our senior engineering team today to review your project goals, scope, and technical roadmap.</p>
         <div class="cta-buttons mt-4">
           <a routerLink="/contact" class="btn btn-primary">Request a Free Consultation →</a>
-          <a href="tel:+94112345678" class="btn btn-secondary">
+          <a href="tel:+94704588299" class="btn btn-secondary">
             <span nz-icon nzType="phone" nzTheme="outline"></span>
-            Call Office: +94 11 234 5678
+            Call Office: +94704588299
           </a>
         </div>
       </div>
