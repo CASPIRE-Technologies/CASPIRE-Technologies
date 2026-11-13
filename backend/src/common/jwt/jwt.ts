@@ -1,4 +1,5 @@
 import { JwtService } from '@nestjs/jwt';
+import type { StringValue } from 'ms';
 
 export enum Role {
   USER = 'USER',
@@ -18,12 +19,12 @@ export default class JWT {
 
   private static svc = new JwtService({});
 
-  static signAccess(payload: JwtPayload, expiresIn = '15m') {
+  static signAccess(payload: JwtPayload, expiresIn: StringValue | number = '15m') {
     // BUG FIX: was `(payload, {...})` — comma operator dropped `payload`
     return this.svc.sign(payload, { secret: this.secret, expiresIn });
   }
 
-  static signRefresh(payload: JwtPayload, expiresIn = '7d') {
+  static signRefresh(payload: JwtPayload, expiresIn: StringValue | number = '7d') {
     return this.svc.sign(payload, { secret: this.refreshSecret, expiresIn });
   }
 
