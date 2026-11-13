@@ -33,8 +33,13 @@ import { SeoService } from '../../core/services/seo.service';
         <!-- Projects Grid -->
         <div class="portfolio-grid mt-4">
           <article *ngFor="let proj of projects(); let i = index" class="portfolio-card reveal" [style.transition-delay.ms]="i * 70">
-            <div class="project-image-wrap">
-              <img [src]="proj.image" [alt]="proj.title + ' website preview'" class="project-image" />
+            <div class="project-image-wrap" [class.full-preview-wrap]="proj.title === 'PIC Power Infrastructure Consultants'">
+              <img
+                [src]="proj.image"
+                [alt]="proj.title + ' website preview'"
+                class="project-image"
+                [class.full-preview]="proj.title === 'PIC Power Infrastructure Consultants'"
+              />
               <div class="project-overlay">
                 <a class="preview-btn" [href]="proj.previewUrl" target="_blank" rel="noopener noreferrer">
                   Preview site <span aria-hidden="true">↗</span>
@@ -117,6 +122,8 @@ import { SeoService } from '../../core/services/seo.service';
     }
     .project-image-wrap { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #e2e8f0; }
     .project-image { width: 100%; height: 100%; display: block; object-fit: cover; object-position: top center; transition: transform 0.5s ease; }
+    .project-image-wrap.full-preview-wrap { aspect-ratio: auto; }
+    .project-image.full-preview { height: auto; object-fit: contain; object-position: top center; }
     .portfolio-card:hover .project-image, .portfolio-card:focus-within .project-image { transform: scale(1.04); }
     .project-overlay {
       position: absolute;
