@@ -27,15 +27,15 @@ export const siteContent = {
     },
     telephone: {
       label: 'Office Telephone',
-      value: '+94704588299',
-      href: 'tel:+94704588299',
-      schemaValue: '+94704588299',
+      value: '+94717927896',
+      href: 'tel:+94717927896',
+      schemaValue: '+94717927896',
     },
     whatsapp: {
       label: 'WhatsApp Business',
-      value: '+94704588299',
-      href: 'https://wa.me/94704588299',
-      linkText: 'Chat Direct on WhatsApp (+94704588299) ->',
+      value: '+94717927896',
+      href: 'https://wa.me/94717927896',
+      linkText: 'Chat Direct on WhatsApp (+94717927896) ->',
     },
     linkedin: {
       label: 'Official LinkedIn Page',

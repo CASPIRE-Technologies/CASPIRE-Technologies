@@ -81,7 +81,7 @@ import { siteContent } from '../../site-content';
 
               <div class="form-group">
                 <label for="telephone">Telephone Number <span class="req">*</span></label>
-                <input type="tel" id="telephone" formControlName="telephone" placeholder="e.g. +94704588299" class="form-control" [class.is-invalid]="isFieldInvalid('telephone')" />
+                <input type="tel" id="telephone" formControlName="telephone" placeholder="e.g. +94717927896" class="form-control" [class.is-invalid]="isFieldInvalid('telephone')" />
                 <span *ngIf="isFieldInvalid('telephone')" class="invalid-feedback">Telephone number is required.</span>
               </div>
             </div>

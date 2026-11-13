@@ -17,7 +17,7 @@ export class CreateEnquiryDto {
   @IsNotEmpty({ message: 'Email address is required' })
   email!: string;
 
-  @ApiProperty({ example: '+94704588299', description: 'Telephone number' })
+  @ApiProperty({ example: '+94717927896', description: 'Telephone number' })
   @IsString()
   @IsNotEmpty({ message: 'Telephone number is required' })
   telephone!: string;
